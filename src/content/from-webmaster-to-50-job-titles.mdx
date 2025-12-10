@@ -1,0 +1,135 @@
+---
+title: "From Webmaster to 50 Job Titles… and Back Again"
+publishedAt: "2025-12-10"
+summary: "Historical arc from the early “webmaster” days to hyper-specialisation and back toward a new consolidated role, powered by AI/vibe coding and simpler tools like Svelte and htmx."
+category: "web-development"
+popular: true
+---
+
+In the early 2000s, when I first discovered the magic of the web on my iMac over a dial-up connection, most websites had a little signature at the bottom: **“Webmaster:” + a name**.
+
+That person was everything in one:
+- They wrote the HTML.
+- They sliced and designed the layout.
+- They wrote the content.
+- They configured the server and hosting.
+- They answered support emails.
+
+If you had feedback about the site, you emailed the webmaster directly. There was a single human you could point to and say: *“They made this.”*
+
+Over the next two decades, that role blew apart into a small industry’s worth of job titles.
+
+---
+
+## The Explosion of Roles
+
+As the web matured, expectations exploded:
+
+- Sites turned into apps.
+- Static pages became dynamic, personalised experiences.
+- Businesses started to depend on the web as a primary channel, not just an online brochure.
+
+What used to be “the webmaster’s job” fragmented into:
+
+- Frontend engineer  
+- Backend engineer / API engineer  
+- UX designer  
+- UI designer  
+- Product designer  
+- Content designer / UX writer  
+- SEO specialist  
+- DevOps / SRE  
+- Analytics / growth engineer  
+- Performance engineer  
+- Accessibility specialist  
+
+And that’s just the tip of the iceberg.
+
+The needs grew, and they were booming. Each new layer of sophistication added more tools, more abstractions, more configuration. We traded one full-stack generalist for dozens of specialists and a lot of handoffs.
+
+The cost:  
+- **Longer feedback loops.** Designers hand over Figma; developers translate it; QA tests it; product reviews it.  
+- **Less ownership.** Very few people own the experience end-to-end.  
+- **More complexity.** The stack itself becomes its own problem domain.
+
+---
+
+## 2025: Vibe Coding and the Return of Consolidation
+
+Fast-forward to **2025**. After a full year of AI-assisted “vibe coding” going mainstream, something interesting is happening.
+
+Listening to the *Dive Club* podcast the other day, it clicked for me:  
+
+> Writing code as a profession is evolving again.
+
+AI tools can now:
+- Scaffold projects.
+- Generate components.
+- Wire up basic APIs.
+- Suggest sensible defaults for state management and routing.
+
+They don’t replace engineering, but they **compress the skill stack** needed to get working software on the screen.
+
+This has a few consequences:
+
+1. **One person can ship more.** A motivated individual can go from idea to running prototype fast, without memorising every build tool and CLI flag.
+2. **Roles start to overlap again.** A designer with some coding literacy plus AI assistance can implement a lot on their own.
+3. **The concept of “webmaster” re-emerges—just upgraded.** It’s not the same as in 2000, but the spirit of “one person owns the whole experience” is back on the table.
+
+Where we previously split one role into fifty, we’re now seeing a gentle gravitational pull back towards **consolidation**.
+
+---
+
+## Tools That Feel Like the Old Web (In a Good Way)
+
+This shift isn’t *just* about AI. It’s also about the kinds of tools we choose.
+
+One of the reasons I love **Svelte** is that it feels like a modern expression of the old “just write HTML/CSS/JS” mindset:
+
+- Single-file components with markup, styles, and logic together.
+- Compilation that removes a lot of runtime overhead.
+- Minimal boilerplate compared to many JavaScript frameworks.
+
+It gives me the sense that **I’m in charge again**, not the build pipeline.
+
+> More on that here: [Why Svelte Feels Like Real Web Development](/svelte)
+
+Similarly, **htmx** gives me hope for a simpler web stack:
+
+- It lets you declare interactions directly in HTML using attributes.
+- You can progressively enhance server-rendered HTML without shipping a massive SPA.
+- It encourages a mental model that looks a lot like the old web: *render HTML, then sprinkle behaviour*, not *ship a megabyte of JavaScript and re-implement the browser.*
+
+With tools like Svelte and htmx, you can choose **deliberate complexity** instead of accidental complexity. You add weight when it’s needed, not by default.
+
+---
+
+## npm Hell, Multi-MB Pages, and Regaining Control
+
+We’ve all seen it:
+
+- Pages that ship **multi-megabyte bundles** for trivial UI.
+- Dependency trees where you pull in a 600-line library for a three-line helper.
+- npm package nesting hell, where nobody can fully explain why a button click pulls in half of the registry.
+
+AI and vibe coding are not a magic cure for this, but they *do* shift the power dynamics:
+
+- You can **ask for simpler solutions** and get alternatives that don’t drag in three extra layers of abstraction.
+- You can **refactor fearlessly**, because the tedious parts—updating callsites, adjusting types, regenerating boilerplate—can be offloaded.
+- You can **prototype multiple approaches** quickly and choose the one that’s actually sane, not the one that was easiest to wire up the first time.
+
+Again: not a solution, but **more control**.
+
+---
+
+## The New Webmaster Mindset
+
+We’re not literally going back to the footer credit “webmaster: someone@isp.com”. But the *mindset* is returning:
+
+- **Holistic ownership**: caring about design, implementation, performance, and maintainability as one coherent story.
+- **Tool literacy over tool worship**: picking Svelte, htmx, or whatever else because it fits the problem, not because it’s the default on Twitter.
+- **AI as leverage, not a crutch**: using vibe coding to accelerate judgment, not to replace it.
+
+The stack is still complex. The industry is still specialised. But the idea that **one person can have meaningful, end-to-end impact** on a web experience is surprisingly alive again.
+
+And for people who enjoy thinking about both pixels *and* code, these are exciting times to be building for the web.
