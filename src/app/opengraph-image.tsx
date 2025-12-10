@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const dynamic = "force-static";
 
 export const alt = "Toon van Ramshorst - Technical Designer & AI Coder";
 export const size = {
