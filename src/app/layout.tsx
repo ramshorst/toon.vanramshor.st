@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   description: "Personal website and blog of Toon van Ramshorst",
 };
 
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfbf7" }, // Matches light mode background
+    { media: "(prefers-color-scheme: dark)", color: "#050a05" },  // Matches dark mode background
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

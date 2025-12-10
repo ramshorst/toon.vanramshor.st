@@ -7,48 +7,72 @@ export const metadata = {
 
 export default function AboutPage() {
     return (
-        <div className="max-w-3xl mx-auto py-12">
-            <h1 className="text-4xl font-bold mb-8">About Me</h1>
+        <div className="max-w-3xl mx-auto py-12 px-6">
+            <h1 className="text-5xl font-bold mb-6 tracking-tight">Designing the Future of Work.</h1>
 
-            <div className="prose prose-lg dark:prose-invert">
-                <p className="lead">
-                    I design and develop web interfaces with a focus on B2B products and SaaS applications. My playground: transforming complex business needs into simple, efficient, and enjoyable experiences.
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+                <p className="lead text-xl text-muted-foreground mb-12">
+                    I bridge the gap between complex technical requirements and intuitive user experiences.
+                    As a Technical Designer & AI Coder, I specialize in crafting robust B2B products and SaaS applications that are as beautiful as they are functional.
                 </p>
 
-                <p>
-                    On the technical side, I work mainly with <strong>JavaScript (React.js, Vue.js, Svelte)</strong>, with a high standard for frontend quality: pixel-perfect UI, fluid UX, and clean, structured code.
-                </p>
-
-                <p>
-                    I also integrate <strong>AI bricks</strong> (agents, automations, tools like Claude Code, etc.) to accelerate workflows, enrich products, or help teams gain productivity.
-                </p>
-
-                <h3>My Approach</h3>
-                <p>
-                    Pragmatic, result-oriented, with direct and transparent dialogue. Trilingual (French / Dutch / English), I can work with international teams. Based in Lyon, available remotely or on-site if needed.
-                </p>
-
-                <h2>Experience</h2>
-                <div className="not-prose space-y-8">
-                    <div className="border-l-2 border-border pl-6 relative">
-                        <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary" />
-                        <h3 className="text-xl font-bold">Full Stack Designer</h3>
-                        <div className="text-muted-foreground mb-2">Trackstone • May 2020 - Oct 2022</div>
-                        <p className="text-muted-foreground">
-                            Product design and front-end development for a real estate investment monitoring web app.
-                            Interface implementation in Vue.js. Design of user acquisition pages.
+                <div className="grid md:grid-cols-2 gap-12 my-16">
+                    <div>
+                        <h3 className="text-2xl font-semibold mb-4">The Philosophy</h3>
+                        <p>
+                            My approach is rooted in clarity. Whether it's a complex dashboard or an AI-driven workflow,
+                            I believe in design that empowers users and code that scales effortlessly.
+                            I don't just build interfaces; I architect solutions that solve real business problems.
                         </p>
                     </div>
-                    {/* Add more experience items if available */}
+                    <div>
+                        <h3 className="text-2xl font-semibold mb-4">The Stack</h3>
+                        <p>
+                            I build with precision using modern tools like <strong>React, Vue, and Svelte</strong>.
+                            Beyond traditional coding, I leverage <strong>AI agents</strong> to automate the mundane,
+                            allowing teams to focus on what truly matters.
+                        </p>
+                    </div>
                 </div>
 
-                <h2>Skills</h2>
-                <div className="not-prose flex flex-wrap gap-2">
-                    {["Vibe Coding", "JavaScript", "React.js", "Vue.js", "Svelte", "B2B Software", "UI Design", "UX Design", "Front-end Development", "AI Agents"].map((skill) => (
-                        <span key={skill} className="px-3 py-1 bg-muted rounded-full text-sm font-medium">
-                            {skill}
-                        </span>
+                <hr className="border-border my-12" />
+
+                <h2 className="text-3xl font-bold mb-8">Industry Expertise</h2>
+                <p className="mb-6">
+                    I have applied this pragmatic, design-led approach across diverse and demanding sectors, translating specialized needs into seamless digital tools:
+                </p>
+                <ul className="grid sm:grid-cols-2 gap-4 list-none pl-0">
+                    {[
+                        "Semiconductors & Computer Hardware",
+                        "Nanotechnologies",
+                        "Construction",
+                        "Real Estate",
+                        "Software Publishing"
+                    ].map((industry) => (
+                        <li key={industry} className="flex items-center gap-3 p-4 rounded-lg bg-muted/50 border border-transparent hover:border-border transition-colors">
+                            <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" />
+                            <span className="font-medium">{industry}</span>
+                        </li>
                     ))}
+                </ul>
+
+                <hr className="border-border my-12" />
+
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 bg-muted/30 p-8 rounded-2xl">
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">Based in Lyon, Thinking Globally.</h3>
+                        <p className="text-muted-foreground m-0">
+                            Available for remote collaboration. <br />I speak French, English and Dutch.
+                        </p>
+                    </div>
+                    <a
+                        href="https://calendly.com/ramshorst/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition-opacity whitespace-nowrap no-underline"
+                    >
+                        Let's Work Together
+                    </a>
                 </div>
             </div>
         </div>

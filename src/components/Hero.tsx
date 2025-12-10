@@ -53,12 +53,17 @@ export function Hero() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex-1 max-w-md"
+                className="flex-1 max-w-md relative"
             >
                 <img
                     src="/toon_cartoon.png"
                     alt="Cartoon version of Toon"
-                    className="w-full h-auto drop-shadow-2xl"
+                    className="w-full h-auto drop-shadow-2xl dark:hidden"
+                />
+                <img
+                    src="/toon_cartoon_dark.png"
+                    alt="Cartoon version of Toon (Night Mode)"
+                    className="w-full h-auto drop-shadow-2xl hidden dark:block"
                 />
             </motion.div>
         </section>
