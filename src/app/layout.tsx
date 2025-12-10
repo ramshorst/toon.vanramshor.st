@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Toon van Ramshorst",
   description: "Personal website and blog of Toon van Ramshorst",
+  alternates: {
+    types: {
+      "application/rss+xml": "https://toon.vanramshor.st/feed.xml",
+    },
+  },
 };
 
 export const viewport = {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Rss } from "lucide-react";
 
 export function Footer() {
     return (
@@ -56,6 +56,15 @@ export function Footer() {
                             >
                                 <Linkedin className="h-5 w-5" />
                                 <span className="sr-only">LinkedIn</span>
+                            </Link>
+                            <Link
+                                href="/feed.xml"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-muted rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                            >
+                                <Rss className="h-5 w-5" />
+                                <span className="sr-only">RSS Feed</span>
                             </Link>
                         </div>
                     </div>
