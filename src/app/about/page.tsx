@@ -58,6 +58,51 @@ export default function AboutPage() {
 
                 <hr className="border-border my-12" />
 
+                <h2 className="text-3xl font-bold mb-8">Working Model</h2>
+                <p className="mb-8">
+                    I operate on a fractional basis, selling my time in dedicated full-day slots to select companies.
+                    This allows me to integrate deeply with your team as a long-term partner, working consistently throughout the year
+                    to drive projects forward.
+                </p>
+
+                <div className="bg-card border border-border rounded-xl p-6 mb-12">
+                    <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                        </span>
+                        2026 Availability
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+                        {[
+                            { day: "Monday", status: "Booked" },
+                            { day: "Tuesday", status: "Booked" },
+                            { day: "Wednesday", status: "Booked" },
+                            { day: "Thursday", status: "Available" },
+                            { day: "Friday", status: "Booked" },
+                        ].map((slot) => (
+                            <div
+                                key={slot.day}
+                                className={`
+                                    flex flex-col items-center justify-center p-4 rounded-lg border text-center transition-all
+                                    ${slot.status === "Available"
+                                        ? "bg-primary/10 border-primary text-primary font-medium scale-105 shadow-sm"
+                                        : "bg-muted/30 border-transparent text-muted-foreground opacity-70"
+                                    }
+                                `}
+                            >
+                                <span className="text-sm uppercase tracking-wider mb-1">{slot.day}</span>
+                                <span className="font-bold">{slot.status}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-6 text-center">
+                        Currently accepting discussions for the Tuesday slot.
+                    </p>
+                </div>
+
+                <hr className="border-border my-12" />
+
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 bg-muted/30 p-8 rounded-2xl">
                     <div>
                         <h3 className="text-xl font-bold mb-2">Based in Lyon, Thinking Globally.</h3>

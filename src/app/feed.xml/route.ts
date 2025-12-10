@@ -1,6 +1,8 @@
 import RSS from "rss";
 import { getBlogPosts } from "@/lib/blog";
 
+export const dynamic = "force-static";
+
 export async function GET() {
     const feed = new RSS({
         title: "Toon van Ramshorst",
