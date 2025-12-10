@@ -4,13 +4,14 @@ import { notFound } from "next/navigation";
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
     return posts
-        .filter((post) => !post.category)
+        .filter((post) => post.category)
         .map((post) => ({
+            category: post.category,
             slug: post.slug,
         }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }) {
     const { slug } = await params;
     const post = await getBlogPost(slug);
 
@@ -28,11 +29,11 @@ import { TableOfContents } from "@/components/TableOfContents";
 
 // ... imports
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
+export default async function CategorizedBlogPostPage({ params }: { params: Promise<{ category: string; slug: string }> }) {
+    const { category, slug } = await params;
     const post = await getBlogPost(slug);
 
-    if (!post) {
+    if (!post || post.category !== category) {
         notFound();
     }
 
@@ -40,6 +41,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="max-w-6xl mx-auto py-12 flex gap-12 relative">
             <article className="flex-1 max-w-3xl mx-auto">
                 <header className="mb-12 text-center">
+                    <div className="text-sm font-medium text-primary mb-4 uppercase tracking-wider">
+                        {post.category}
+                    </div>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
                     <time className="text-muted-foreground">
                         {new Date(post.publishedAt).toLocaleDateString("en-US", {

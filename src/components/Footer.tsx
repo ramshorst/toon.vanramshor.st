@@ -71,16 +71,17 @@ export function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-                    <div>
-                        © {new Date().getFullYear()} Toon van Ramshorst.
-                    </div>
                     <div className="flex items-center gap-2">
                         <span>Designed & Built with</span>
                         <span className="text-red-500 animate-pulse">❤</span>
                         <span>and AI</span>
+                    </div>
+                    <div>
+                        © 2008 - present
                     </div>
                 </div>
             </div>
         </footer>
     );
 }
+a

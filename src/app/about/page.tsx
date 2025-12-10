@@ -76,7 +76,7 @@ export default function AboutPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
                         {[
                             { day: "Monday", status: "Booked" },
-                            { day: "Tuesday", status: "Booked" },
+                            { day: "Tuesday", status: "Available" },
                             { day: "Wednesday", status: "Booked" },
                             { day: "Thursday", status: "Available" },
                             { day: "Friday", status: "Booked" },
