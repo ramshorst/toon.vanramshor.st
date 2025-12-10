@@ -4,50 +4,60 @@
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  /* Light Mode */
-  --background: #fffffe;
-  --foreground: #2b2c34;
-  --card: #fffffe;
-  --card-foreground: #2b2c34;
-  --popover: #fffffe;
-  --popover-foreground: #2b2c34;
-  --primary: #6246ea;
-  --primary-foreground: #fffffe;
-  --secondary: #d1d1e9;
-  --secondary-foreground: #2b2c34;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #e45858;
-  --accent-foreground: #fffffe;
+  /* Light Mode - Nature Theme */
+  --background: #fcfdfa;
+  /* Creamy off-white */
+  --foreground: #1a2f1a;
+  /* Dark forest green text */
+  --card: #ffffff;
+  --card-foreground: #1a2f1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a2f1a;
+  --primary: #3a7d44;
+  /* Fresh leaf green */
+  --primary-foreground: #ffffff;
+  --secondary: #e8f5e9;
+  /* Very light green */
+  --secondary-foreground: #1b5e20;
+  --muted: #f1f8e9;
+  --muted-foreground: #558b2f;
+  --accent: #d84315;
+  /* Burnt orange/autumn leaf */
+  --accent-foreground: #ffffff;
   --destructive: #ef4444;
-  --destructive-foreground: #fffffe;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #6246ea;
+  --destructive-foreground: #ffffff;
+  --border: #c8e6c9;
+  --input: #c8e6c9;
+  --ring: #3a7d44;
   --radius: 0.5rem;
 }
 
 [data-theme="dark"] {
-  /* Dark Mode (Josh W. Comeau inspired) */
-  --background: #0f0e17;
-  --foreground: #fffffe;
-  --card: #16161a;
-  --card-foreground: #fffffe;
-  --popover: #16161a;
-  --popover-foreground: #fffffe;
-  --primary: #ff8906;
-  --primary-foreground: #0f0e17;
-  --secondary: #242629;
-  --secondary-foreground: #fffffe;
-  --muted: #242629;
-  --muted-foreground: #94a1b2;
-  --accent: #f25f4c;
-  --accent-foreground: #fffffe;
+  /* Dark Mode - Nature Theme (Deep Forest) */
+  --background: #051a05;
+  /* Very dark green/black */
+  --foreground: #e8f5e9;
+  /* Light green text */
+  --card: #0a290a;
+  /* Dark green card */
+  --card-foreground: #e8f5e9;
+  --popover: #0a290a;
+  --popover-foreground: #e8f5e9;
+  --primary: #66bb6a;
+  /* Lighter green for dark mode */
+  --primary-foreground: #051a05;
+  --secondary: #1b5e20;
+  --secondary-foreground: #e8f5e9;
+  --muted: #1b5e20;
+  --muted-foreground: #a5d6a7;
+  --accent: #ff7043;
+  /* Lighter orange */
+  --accent-foreground: #ffffff;
   --destructive: #7f1d1d;
-  --destructive-foreground: #fffffe;
-  --border: #242629;
-  --input: #242629;
-  --ring: #ff8906;
+  --destructive-foreground: #ffffff;
+  --border: #1b5e20;
+  --input: #1b5e20;
+  --ring: #66bb6a;
 
   /* Prose Overrides for Dark Mode */
   --tw-prose-body: var(--foreground);

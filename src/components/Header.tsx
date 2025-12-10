@@ -35,6 +35,15 @@ export function Header() {
                         Blog
                     </Link>
 
+                    <Link
+                        href="https://calendly.com/ramshorst/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                    >
+                        Let's talk
+                    </Link>
+
                     <button
                         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                         className="p-2 rounded-full hover:bg-muted transition-colors"
