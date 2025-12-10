@@ -1,6 +1,8 @@
 import { getBlogPost, getBlogPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-static";
+
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
     return posts.map((post) => ({

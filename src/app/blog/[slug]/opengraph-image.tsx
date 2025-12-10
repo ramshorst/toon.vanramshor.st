@@ -1,6 +1,8 @@
 import { ImageResponse } from "next/og";
 import { getBlogPost } from "@/lib/blog";
 
+export const revalidate = false;
+
 export const size = {
     width: 1200,
     height: 630,
