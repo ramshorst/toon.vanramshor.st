@@ -112,3 +112,32 @@ body {
   font-family: var(--font-sans);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Beautiful separator line for articles */
+.prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--primary),
+    transparent
+  );
+  margin: 3rem auto;
+  position: relative;
+  width: 80%;
+  opacity: 0.6;
+}
+
+.prose hr::before {
+  content: "✦";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background);
+  padding: 0 1rem;
+  color: var(--primary);
+  font-size: 0.875rem;
+  opacity: 0.8;
+}

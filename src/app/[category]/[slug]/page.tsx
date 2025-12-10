@@ -1,5 +1,6 @@
 import { getBlogPost, getBlogPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
@@ -41,9 +42,12 @@ export default async function CategorizedBlogPostPage({ params }: { params: Prom
         <div className="max-w-6xl mx-auto py-12 flex gap-12 relative">
             <article className="flex-1 max-w-3xl mx-auto">
                 <header className="mb-12 text-center">
-                    <div className="text-sm font-medium text-primary mb-4 uppercase tracking-wider">
+                    <Link
+                        href={`/${post.category}`}
+                        className="text-sm font-medium text-primary mb-4 uppercase tracking-wider no-underline hover:opacity-80 transition-opacity"
+                    >
                         {post.category}
-                    </div>
+                    </Link>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
                     <time className="text-muted-foreground">
                         {new Date(post.publishedAt).toLocaleDateString("en-US", {
