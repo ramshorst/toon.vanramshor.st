@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { compileMDX } from "next-mdx-remote/rsc";
+import { useMDXComponents } from "@/mdx-components";
 
 const contentDir = path.join(process.cwd(), "src/content");
 
@@ -49,6 +50,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
                 }>({
                     source,
                     options: { parseFrontmatter: true },
+                    components: useMDXComponents({}),
                 });
 
                 return {

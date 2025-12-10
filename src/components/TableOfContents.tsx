@@ -14,7 +14,7 @@ export function TableOfContents() {
     const [activeId, setActiveId] = useState<string>("");
 
     useEffect(() => {
-        const elements = Array.from(document.querySelectorAll("h2, h3, h4"))
+        const elements = Array.from(document.querySelectorAll("h2, h3"))
             .filter((element) => element.id)
             .map((element) => ({
                 id: element.id,
@@ -45,7 +45,7 @@ export function TableOfContents() {
     if (headings.length < 3) return null;
 
     return (
-        <nav className="hidden xl:block sticky top-32 ml-12 w-64 max-h-[calc(100vh-8rem)] overflow-auto">
+        <nav className="hidden lg:block sticky top-32 ml-12 w-64 max-h-[calc(100vh-8rem)] overflow-auto">
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-muted-foreground">
                 On this page
             </h4>
