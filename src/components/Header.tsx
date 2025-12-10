@@ -17,14 +17,33 @@ export function Header() {
     return (
         <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="font-bold text-xl tracking-tight hover:text-primary transition-colors">
-                    <motion.span
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
+                <Link href="/" className="font-bold text-xl tracking-tight group">
+                    <motion.div
+                        initial="initial"
+                        whileHover="hover"
+                        className="relative"
                     >
-                        Toon van Ramshorst
-                    </motion.span>
+                        {/* Staggered Color Transition */}
+                        <div className="flex">
+                            {"Toon van Ramshorst".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    variants={{
+                                        initial: { color: "var(--foreground)" },
+                                        hover: { color: "var(--primary)" },
+                                    }}
+                                    transition={{
+                                        duration: 0.2,
+                                        ease: "easeInOut",
+                                        delay: 0.015 * i,
+                                    }}
+                                    className="inline-block"
+                                >
+                                    {char === " " ? "\u00A0" : char}
+                                </motion.span>
+                            ))}
+                        </div>
+                    </motion.div>
                 </Link>
 
                 <nav className="flex items-center gap-6">
