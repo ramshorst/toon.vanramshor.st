@@ -1,12 +1,11 @@
-import { getBlogPost, getBlogPosts } from "@/lib/blog";
+import { getBlogPost } from "@/lib/blog";
+import { getBlogSlugs } from "@/lib/blog-slugs";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-static";
-
 export async function generateStaticParams() {
-    const posts = await getBlogPosts();
-    return posts.map((post) => ({
-        slug: post.slug,
+    const slugs = getBlogSlugs();
+    return slugs.map((slug) => ({
+        slug,
     }));
 }
 

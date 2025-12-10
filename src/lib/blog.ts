@@ -12,6 +12,16 @@ export type BlogPost = {
     content: React.ReactNode;
 };
 
+export function getBlogSlugs() {
+    if (!fs.existsSync(contentDir)) {
+        return [];
+    }
+    const files = fs.readdirSync(contentDir);
+    return files
+        .filter((file) => file.endsWith(".mdx"))
+        .map((file) => file.replace(".mdx", ""));
+}
+
 export async function getBlogPosts(): Promise<BlogPost[]> {
     if (!fs.existsSync(contentDir)) {
         return [];

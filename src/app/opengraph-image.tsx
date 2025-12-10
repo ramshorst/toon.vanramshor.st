@@ -62,6 +62,8 @@ export default async function Image() {
                         maxWidth: 800,
                         textAlign: "center",
                         lineHeight: 1.4,
+                        display: "flex",
+                        flexDirection: "column",
                     }}
                 >
                     Technical Designer & AI Coder

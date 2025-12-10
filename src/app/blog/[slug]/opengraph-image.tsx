@@ -1,10 +1,12 @@
 import { ImageResponse } from "next/og";
-import { getBlogPost, getBlogPosts } from "@/lib/blog";
+import { getBlogPost, getBlogSlugs } from "@/lib/blog";
+
+export const revalidate = false;
 
 export async function generateStaticParams() {
-    const posts = await getBlogPosts();
-    return posts.map((post) => ({
-        slug: post.slug,
+    const slugs = getBlogSlugs();
+    return slugs.map((slug) => ({
+        slug,
     }));
 }
 
