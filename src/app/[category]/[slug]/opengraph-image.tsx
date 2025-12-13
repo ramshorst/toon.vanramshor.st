@@ -7,8 +7,9 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
     return posts
-        .filter((post) => !post.category)
+        .filter((post) => post.category)
         .map((post) => ({
+            category: post.category,
             slug: post.slug,
         }));
 }
@@ -20,7 +21,7 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: { slug: string } }) {
+export default async function Image({ params }: { params: { category: string; slug: string } }) {
     const post = await getBlogPost(params.slug);
 
     if (!post) {
