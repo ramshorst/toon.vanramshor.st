@@ -61,7 +61,7 @@ export function Hero() {
                     className="w-full h-auto drop-shadow-2xl dark:hidden"
                 />
                 <img
-                    src="/toon_cartoon_dark.png"
+                    src="/toon_dithered_mac.png"
                     alt="Cartoon version of Toon (Night Mode)"
                     className="w-full h-auto drop-shadow-2xl hidden dark:block"
                 />

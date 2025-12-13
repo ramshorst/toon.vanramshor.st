@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+// Return 404 for paths not in generateStaticParams
+export const dynamicParams = false;
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
     const categories = new Set(posts.map((post) => post.category).filter(Boolean));

@@ -2,6 +2,8 @@ import { getBlogPost, getBlogPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+// Return 404 for paths not in generateStaticParams
+export const dynamicParams = false;
 export async function generateStaticParams() {
     const posts = await getBlogPosts();
     return posts
