@@ -53,6 +53,9 @@ export function Header() {
                     <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
                         Blog
                     </Link>
+                    <Link href="/photos" className="text-sm font-medium hover:text-primary transition-colors">
+                        Photos
+                    </Link>
 
                     <Link
                         href="https://calendly.com/ramshorst/30min"
