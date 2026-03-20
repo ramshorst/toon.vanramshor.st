@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Link2, Check } from "lucide-react";
+import { ChevronDown, Link2, Check, ExternalLink } from "lucide-react";
 import { SectorIcon } from "./SectorIcon";
 import { TechBadge } from "./TechBadge";
 import type { Project } from "@/lib/projects";
@@ -39,8 +39,13 @@ export function ProjectTimeline({ projects }: { projects: Project[] }) {
         if (next) {
             window.history.replaceState(null, "", `#${next}`);
             setTimeout(() => {
-                itemRefs.current[next]?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 60);
+                const el = itemRefs.current[next];
+                if (!el) return;
+                const rect = el.getBoundingClientRect();
+                if (rect.top < 96) {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }, 400);
         } else {
             window.history.replaceState(null, "", window.location.pathname);
         }
@@ -194,7 +199,19 @@ function ProjectRow({
                     >
                         <div className="border-t border-border">
                             {/* Copy link bar */}
-                            <div className="flex justify-end px-5 pt-3 pb-1">
+                            <div className="flex items-center justify-end gap-4 px-5 pt-3 pb-1">
+                                {project.url && (
+                                    <a
+                                        href={project.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <ExternalLink size={12} />
+                                        {project.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                                    </a>
+                                )}
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();

@@ -14,6 +14,7 @@ export type Project = {
     role: string;
     description: string;
     tags: string[];
+    url?: string;
     draft?: boolean;
     content: React.ReactNode;
 };
@@ -40,6 +41,7 @@ export async function getProjects(): Promise<Project[]> {
                     role: string;
                     description: string;
                     tags: string[];
+                    url?: string;
                     draft?: boolean;
                 }>({
                     source,
@@ -56,6 +58,7 @@ export async function getProjects(): Promise<Project[]> {
                     role: frontmatter.role,
                     description: frontmatter.description,
                     tags: frontmatter.tags ?? [],
+                    url: frontmatter.url,
                     draft: frontmatter.draft ?? false,
                     content,
                 };
