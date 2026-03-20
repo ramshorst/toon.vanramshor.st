@@ -14,7 +14,7 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
     const [hovered, setHovered] = useState(false);
     const [aboutHovered, setAboutHovered] = useState(false);
     const [displayYear, setDisplayYear] = useState(START_YEAR);
-    const timerRef = useRef<ReturnType<typeof setTimeout>>();
+    const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     useEffect(() => {
         if (!hovered) {
