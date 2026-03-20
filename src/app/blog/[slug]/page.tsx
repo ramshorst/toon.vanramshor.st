@@ -46,11 +46,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     </time>
                 </header>
 
-                <div className="prose prose-lg dark:prose-invert mx-auto prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-xl">
+                <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-xl">
                     {post.content}
                 </div>
 
-                <footer className="mt-12 pt-6 border-t border-border text-sm text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-3">
+                <footer className="mt-8 pt-5 border-t border-border text-sm text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-3">
                     {post.lastUpdated ? (
                         <span>
                             Last updated on{" "}

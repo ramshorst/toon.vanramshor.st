@@ -59,7 +59,7 @@ export default async function Home() {
           </div>
         </main>
 
-        <aside className="lg:col-span-4 space-y-12">
+        <aside className="hidden lg:block lg:col-span-4 space-y-12">
           {popularPosts.length > 0 && (
             <section>
               <h3 className="text-xl font-bold mb-6 pb-2 border-b border-border">Popular Posts</h3>

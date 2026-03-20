@@ -39,7 +39,7 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
     }, [hovered]);
 
     return (
-        <section className="py-20 md:py-32 flex flex-col md:flex-row items-center justify-center gap-12 text-center md:text-left">
+        <section className="pt-12 pb-6 md:py-32 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 text-center md:text-left">
             <div className="flex-1 max-w-xl">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}

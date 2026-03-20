@@ -88,9 +88,10 @@ export function TableOfContents() {
                             )}
                             onClick={(e) => {
                                 e.preventDefault();
-                                document.getElementById(heading.id)?.scrollIntoView({
-                                    behavior: "smooth",
-                                });
+                                const el = document.getElementById(heading.id);
+                                if (!el) return;
+                                const top = el.getBoundingClientRect().top + window.scrollY - 96;
+                                window.scrollTo({ top, behavior: "smooth" });
                                 setActiveId(heading.id);
                             }}
                         >
