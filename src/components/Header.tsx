@@ -14,7 +14,7 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
-    const { theme, setTheme } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const pathname = usePathname();
@@ -28,12 +28,12 @@ export function Header() {
 
     const ThemeButton = ({ className = "" }: { className?: string }) => (
         <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             className={`p-2 rounded-full hover:bg-muted transition-all duration-150 ${className}`}
             aria-label="Toggle theme"
         >
             {mounted ? (
-                theme === "dark"
+                resolvedTheme === "dark"
                     ? <Sun className="h-5 w-5 text-yellow-500" />
                     : <Moon className="h-5 w-5 text-slate-700" />
             ) : (

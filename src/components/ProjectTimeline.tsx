@@ -125,7 +125,7 @@ function ProjectRow({
     const overflow = isOpen ? 0 : project.tags.length - MAX_VISIBLE_TAGS;
     const yearRange =
         project.endYear && project.endYear !== project.year
-            ? `${project.year}–${project.endYear}`
+            ? `${project.year} → ${project.endYear}`
             : null;
 
     return (

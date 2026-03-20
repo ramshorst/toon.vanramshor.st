@@ -3,27 +3,39 @@ import type { MDXComponents } from "mdx/types";
 function Screenshot({
     src,
     alt,
+    href,
     display = "inline",
 }: {
     src: string;
     alt: string;
+    href?: string;
     display?: "inline" | "wide" | "stretch";
 }) {
     const wrapperClass = {
-        inline: "my-6 rounded-lg overflow-hidden",
-        wide: "my-6 rounded-lg overflow-hidden -mx-5 w-[calc(100%+40px)]",
-        stretch: "my-6 overflow-hidden -mx-5 w-[calc(100%+40px)]",
+        inline: "mt-12 overflow-hidden",
+        wide: "mt-12 overflow-hidden -mx-5 w-[calc(100%+40px)]",
+        stretch: "mt-12 overflow-hidden -mx-5 w-[calc(100%+40px)]",
     }[display];
+
+    const image = (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img src={src} alt={alt} className="w-full h-auto block shadow-sm rounded-lg" />
+    );
 
     return (
         <figure className={wrapperClass}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={alt} className="w-full h-auto block" />
-            {alt && (
-                <figcaption className="text-xs text-center py-2 px-4 text-muted-foreground bg-muted/40">
-                    {alt}
-                </figcaption>
-            )}
+            <div className="bg-muted/40 pt-6 px-[60px] pb-6">
+                {href ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="block">
+                        {image}
+                    </a>
+                ) : image}
+                {alt && (
+                    <figcaption className="text-xs text-center mt-2 text-muted-foreground">
+                        {alt}
+                    </figcaption>
+                )}
+            </div>
         </figure>
     );
 }
