@@ -1,29 +1,20 @@
 ---
-title: "The Designer–Engineer Hybrid Is the New Power Role"
+title: "Design + code: the hybrid role nobody had a job title for (yet)"
 publishedAt: "2025-12-10"
-summary: "Not a pure designer. Not a pure engineer. Something in between—and suddenly, that's where all the leverage is."
+summary: "Not a pure designer. Not a pure engineer. Something in between—and that's where a lot of the leverage ends up."
 category: "web-development"
 popular: true
 ---
 
 Remember webmasters?
 
-In the 2000s, most websites had a little credit in the footer. One name. One person who did *everything*:
-
-- Page layout and visual design
-- HTML, CSS, and whatever JavaScript was fashionable that year
-- Content writing
-- Hosting, deployment, tech support
+In the 2000s, most websites had a little credit in the footer. One name. One person who handled everything: the visual design, the HTML and CSS and whatever JavaScript was fashionable that year, the content writing, the hosting and deployment.
 
 The webmaster owned the whole experience. How it looked, how it worked, how fast it loaded over a wobbly dial-up connection.
 
 Then, slowly, that role fragmented into a parade of specialisations. Design became its own silo. Engineering became its own silo. Handoffs everywhere.
 
-But here's the thing: in 2025, something's shifting again.
-
-> The **designer–engineer hybrid** is quietly becoming the new power role.
-
-Not a pure designer. Not a pure engineer. Someone who thinks in terms of interaction, aesthetics, and user journeys—*and* can express those ideas directly in working code.
+But in 2025, something's shifting again. The people doing the most interesting work tend to combine both sides—design instinct and coding ability—and that combination is turning out to be surprisingly useful. Not a pure designer, not a pure engineer. Someone who thinks in terms of interaction, aesthetics, and user journeys, and can express those ideas directly in working code.
 
 ---
 
@@ -54,71 +45,57 @@ Frustrating for everyone, honestly.
 
 ---
 
-## 2025: Vibe Coding Changes Everything
+## When the Translation Layer Disappears
 
-With AI-assisted workflows, "vibe coding" has become a real thing. And it's kind of magical.
+The handoff pipeline exists for a reason: translating design intent into working code takes time and specialist knowledge. That's the bottleneck.
 
-- You describe the interaction you want
-- You paste a rough layout or component structure
-- The model generates a first pass in your framework of choice
+AI doesn't eliminate that work—but it does compress it dramatically for someone who already has both design judgment and baseline coding ability. You describe the interaction you want, you have a rough sense of the component structure, and the model produces a first pass that's 70% of the way there. Then you shape it the rest of the way yourself.
 
-This dramatically lowers the activation energy for **designers who code a bit** and **engineers who care about design**.
+What changes is the activation energy. Tasks that used to require blocking on another person—"can you wire up this hover state?" or "can you adjust this layout for mobile?"—become things you handle in the moment.
 
-Instead of: *"I need a frontend engineer to translate this Figma file."*
+For the hybrid, this means:
 
-You get: *"I can ask my tools to generate something close and tweak it myself."*
+- Iterating on real components, not static mockups
+- Validating interactions and motion directly in the browser
+- Shipping prototypes that actually behave like the final product
 
-The designer–engineer hybrid can now:
+The pipeline collapses. Handoffs shrink. And the person with the clearest vision for the experience can move the fastest—because they're no longer waiting for someone else to express it in code.
 
-- Iterate on real components, not static mockups
-- Validate interactions and motion directly in the browser
-- Ship prototypes that actually behave like the final product
-
-The pipeline collapses. Handoffs shrink. And the person with the clearest vision for the experience can move the fastest.
-
-(This is my favourite part, honestly.)
+The human judgment part—what should this *feel* like? what's the right interaction model here?—doesn't get automated. That's still entirely yours.
 
 ---
 
-## Why Svelte and htmx Fit This Role So Well
+## Tools That Stay Close to the Material
 
-Tools matter a lot here. Two that fit the hybrid mental model beautifully are **Svelte** and **htmx**.
+Tools matter a lot here. The ones that work best for this role tend to be ones that respect the web's native materials rather than abstracting far away from them.
 
 ### Svelte: Feels Like Enhanced HTML
 
-Svelte is weirdly close to the web's native materials:
+Svelte is weirdly close to how the web actually works:
 
 - **Markup first.** You write HTML-ish templates with minimal ceremony.
 - **Scoped styles.** CSS lives right next to the component it belongs to.
 - **Reactivity without boilerplate.** State just… updates. No hooks, no lifecycle gymnastics.
 
-For a designer who codes—or an engineer with strong design instincts—this is huge:
-
-- The distance between layout, interaction, and styling is tiny
-- You open one `.svelte` file and see the whole picture
-- It doesn't feel like wrestling a framework; it feels like enhanced HTML/CSS/JS
+For a designer who codes—or an engineer with strong design instincts—this matters because the distance between layout, interaction, and styling is tiny. You open one `.svelte` file and see the whole picture. It doesn't feel like wrestling a framework; it feels like enhanced HTML/CSS/JS.
 
 ### htmx: Design in HTML
 
-htmx goes even further:
+htmx goes even further toward the native model:
 
 - Declare dynamic behaviour directly in your markup (`hx-get`, `hx-post`, `hx-swap`)
 - Lean on server-rendered HTML and progressive enhancement
 - Build rich interactions without shipping a massive SPA
 
-For the hybrid, htmx means:
+For the hybrid, this means prototyping by editing templates rather than wiring up a full client-side app. You stay close to the browser's mental model—requests, responses, HTML updates—while still shipping genuinely dynamic features.
 
-- Prototype by editing templates, not wiring up a full client-side app
-- Keep the mental model close to the browser: requests, responses, HTML updates
-- Stay in your comfort zone—typography, layout, flow—while still shipping dynamic features
-
-Both tools **lower the complexity tax** on turning a design idea into production code. That's the key.
+These two are examples of a broader principle: the best tools for this role are the ones that **lower the complexity tax** on turning a design idea into production code. There's no single right answer, but tools that stay readable tend to stay editable.
 
 ---
 
 ## Taking Back Control Over Complexity
 
-One subtle superpower of this hybrid role: **control over complexity**.
+One real advantage of working across both disciplines: **the ability to push back on unnecessary complexity**.
 
 We've somehow normalised:
 
@@ -126,62 +103,38 @@ We've somehow normalised:
 - Deep npm trees for even simple components
 - Build systems that need their own architecture diagrams
 
-The designer–engineer hybrid, armed with AI + Svelte/htmx, can push back:
+The specialist pipeline makes this hard to resist. Engineers default to familiar stacks; designers don't have enough context to challenge them; product has bigger things to worry about.
 
-- Reach for server-rendered HTML when possible
-- Use minimal components instead of entire UI libraries "just in case"
-- Ask AI for *simpler* implementations, not just more layers
+The hybrid can say: "No, let's not do that. There's a simpler pattern that gets us the same experience." And they can back it up—not just as an opinion, but by actually building the simpler thing.
 
-You still end up in npm hell sometimes. This isn't utopia. But you regain the ability to say:
-
-> "No, let's not do that. There's a simpler pattern that gets us the same experience."
-
-That's not a full solution to web bloat—but it's meaningful leverage.
+This isn't a full solution to web bloat. But it's leverage. You're in the room with the context to make that call and the skills to execute on it.
 
 ---
 
 ## Designers Owning More of the Product
 
-Here's what excites me most:
+Here's what the shift actually looks like in practice:
 
-- Designers aren't limited to Figma and slide decks anymore
-- They can **own the experience end-to-end**: behaviour, layout, performance, flows
-- They can test ideas with real working UI, not just clickable prototypes
+- A designer ships a feature directly rather than writing a spec for it
+- An engineer refines the visual details themselves instead of sending a Figma redline back
+- "Handoff" becomes pairing on the actual code—or disappears entirely on small teams
 
-We're already seeing:
+The hybrid isn't a specialist in either direction. They're a person who can hold the full experience in their head—how it looks, how it behaves, how it performs—and make decisions across all three without routing through someone else.
 
-- Designers who ship small features directly as Svelte components
-- Product designers who maintain htmx-enhanced template libraries
-- Teams where "handoff" becomes "pairing on the actual code"
-
-AI acts as a multiplier here:
-
-- It fills in boilerplate
-- It fixes syntax
-- It offers patterns so designers don't have to memorise every API
-
-But the human still decides what the experience should *feel* like. That part doesn't get automated.
+AI acts as a multiplier here: it fills in boilerplate, fixes syntax, offers patterns so you don't have to memorise every API. But it amplifies judgment, not replaces it. You still have to know what you're trying to build.
 
 ---
 
-## The New Power Role
+## Why This Works
 
-The designer–engineer hybrid isn't a fantasy job description. It's a natural consequence of:
+So what makes it effective, specifically?
 
-- Tools that respect the web's original simplicity (Svelte, htmx, plain HTML/CSS/JS)
-- AI that makes translation from intent to code dramatically cheaper
-- Teams that value speed, coherence, and ownership over strict silos
+It's not that the hybrid is better at design than a specialist designer, or better at engineering than a specialist engineer. They're not. The value comes from something else: **fewer lossy translations between intent and reality**.
 
-This role looks a lot like a modern, opinionated version of the old webmaster:
+Every handoff is a compression. Something gets lost. The hybrid removes handoffs—not by being superhuman, but by being the person who holds both sides of the conversation at once.
 
-- Deep empathy for users and aesthetics
-- Enough engineering skill (and AI leverage) to ship real features
-- A strong sense of when complexity is necessary—and when it's just noise
+That's why this tends to punch above its weight on small teams, early products, and anything where speed and coherence matter more than scale.
 
-For people who enjoy both design *and* code, these are incredibly good years to be working on the web. The stack is powerful. The tools are mature. The path from vision to reality has never been more direct.
+The tools are there. The AI assist is real. For people who enjoy both design *and* code, these are genuinely good years to be working on the web.
 
-And the best part?
-
-You don't have to choose between "real engineer" and "just a designer" anymore. You can be the person who makes the thing.
-
-That's where the leverage is. 🙃
+You don't have to choose between "real engineer" and "just a designer." You can be the person who makes the thing—and understands the whole of it.

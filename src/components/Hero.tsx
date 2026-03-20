@@ -15,7 +15,7 @@ export function Hero() {
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-3xl opacity-20 rounded-full" />
                     <h1 className="relative text-5xl md:text-7xl font-bold tracking-tight mb-4">
-                        Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Toon</span>
+                        Hi, I'm <span className="text-foreground">Toon</span>
                     </h1>
                 </motion.div>
 

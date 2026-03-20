@@ -12,6 +12,7 @@ type Heading = {
 export function TableOfContents() {
     const [headings, setHeadings] = useState<Heading[]>([]);
     const [activeId, setActiveId] = useState<string>("");
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         const elements = Array.from(document.querySelectorAll("h2, h3"))
@@ -22,6 +23,7 @@ export function TableOfContents() {
                 level: Number(element.tagName.substring(1)),
             }));
         setHeadings(elements);
+        setMounted(true);
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -46,19 +48,40 @@ export function TableOfContents() {
 
     return (
         <nav className="hidden lg:block sticky top-32 ml-12 w-64 max-h-[calc(100vh-8rem)] overflow-auto">
-            <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-muted-foreground">
+            <h4
+                className="font-bold mb-4 text-sm uppercase tracking-wider text-muted-foreground"
+                style={
+                    mounted
+                        ? { opacity: 0, animation: "tocFadeIn 0.5s ease 0.1s forwards" }
+                        : { opacity: 0 }
+                }
+            >
                 On this page
             </h4>
-            <ul className="space-y-2 text-sm">
-                {headings.map((heading) => (
+            <ul className="space-y-1 text-sm">
+                {headings.map((heading, index) => (
                     <li
                         key={heading.id}
-                        style={{ paddingLeft: (heading.level - 2) * 16 }}
+                        className={cn(
+                            "border-l-2 transition-colors duration-300",
+                            activeId === heading.id
+                                ? "border-primary"
+                                : "border-transparent"
+                        )}
+                        style={{
+                            paddingLeft: `${(heading.level - 2) * 12 + 10}px`,
+                            opacity: 0,
+                            ...(mounted
+                                ? {
+                                      animation: `tocFadeIn 0.45s ease ${0.15 + index * 0.055}s forwards`,
+                                  }
+                                : {}),
+                        }}
                     >
                         <a
                             href={`#${heading.id}`}
                             className={cn(
-                                "block transition-colors hover:text-primary",
+                                "block py-0.5 transition-colors duration-300 hover:text-primary",
                                 activeId === heading.id
                                     ? "text-primary font-medium"
                                     : "text-muted-foreground"

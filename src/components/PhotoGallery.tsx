@@ -1,156 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface PhotoGalleryProps {
   photos: number[];
 }
 
 export default function PhotoGallery({ photos }: PhotoGalleryProps) {
-  const photoRefs = useRef<(HTMLElement | null)[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showHint, setShowHint] = useState(true);
-
-  // For accelerating keyboard navigation
-  const navigationState = useRef({
-    direction: 0, // -1 for up, 1 for down, 0 for none
-    startTime: 0,
-    animationFrame: 0,
-    lastNavTime: 0,
-  });
-
-  // Track which photo is most visible using Intersection Observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the entry with the highest intersection ratio
-        let maxRatio = 0;
-        let maxIndex = -1;
-
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = photoRefs.current.indexOf(entry.target as HTMLElement);
-            if (entry.intersectionRatio > maxRatio) {
-              maxRatio = entry.intersectionRatio;
-              maxIndex = index;
-            }
-          }
-        });
-
-        if (maxIndex !== -1) {
-          setCurrentIndex(maxIndex);
-        }
-      },
-      { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] }
-    );
-
-    photoRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [photos.length]);
-
-  // Precise scroll to photo - aligns to top of image with offset
-  const scrollToPhoto = useCallback(
-    (index: number, smooth = true) => {
-      const targetIndex = Math.max(0, Math.min(photos.length - 1, index));
-      const target = photoRefs.current[targetIndex];
-
-      if (target) {
-        const rect = target.getBoundingClientRect();
-        const scrollTop = window.scrollY;
-
-        // Align to top of image with 95px offset
-        const scrollTo = scrollTop + rect.top - 95;
-
-        window.scrollTo({
-          top: scrollTo,
-          behavior: smooth ? "smooth" : "auto",
-        });
-        setCurrentIndex(targetIndex);
-      }
-    },
-    [photos.length]
+  const [pressedButton, setPressedButton] = useState<"prev" | "next" | null>(
+    null
   );
 
-  // Accelerating navigation loop
-  const runNavigationLoop = useCallback(() => {
-    const state = navigationState.current;
-    if (state.direction === 0) return;
+  const goToPhoto = (index: number) => {
+    const newIndex = Math.max(0, Math.min(photos.length - 1, index));
+    setCurrentIndex(newIndex);
+    setShowHint(false);
+  };
 
-    const now = performance.now();
-    const elapsed = now - state.startTime;
-
-    // Acceleration curve: starts snappy, gets faster
-    // Base interval of 200ms, decreasing to 60ms over 1 second
-    const minInterval = 60;
-    const maxInterval = 200;
-    const accelerationTime = 1000;
-
-    const progress = Math.min(elapsed / accelerationTime, 1);
-    // Ease-in curve for acceleration
-    const easedProgress = progress * progress;
-    const currentInterval =
-      maxInterval - (maxInterval - minInterval) * easedProgress;
-
-    if (now - state.lastNavTime >= currentInterval) {
-      state.lastNavTime = now;
-
-      setCurrentIndex((prev) => {
-        const newIndex = Math.max(
-          0,
-          Math.min(photos.length - 1, prev + state.direction)
-        );
-        // Use instant scroll during rapid navigation for responsiveness
-        const target = photoRefs.current[newIndex];
-        if (target) {
-          const rect = target.getBoundingClientRect();
-          const scrollTop = window.scrollY;
-          const scrollToPos = scrollTop + rect.top - 95;
-
-          window.scrollTo({
-            top: scrollToPos,
-            behavior: elapsed > 150 ? "auto" : "smooth",
-          });
-        }
-        return newIndex;
-      });
+  const nextPhoto = () => {
+    if (currentIndex < photos.length - 1) {
+      setPressedButton("next");
+      setTimeout(() => setPressedButton(null), 150);
+      goToPhoto(currentIndex + 1);
     }
+  };
 
-    state.animationFrame = requestAnimationFrame(runNavigationLoop);
-  }, [photos.length]);
-
-  const startNavigation = useCallback(
-    (direction: number) => {
-      const state = navigationState.current;
-      if (state.direction !== 0) return; // Already navigating
-
-      state.direction = direction;
-      state.startTime = performance.now();
-      state.lastNavTime = 0; // Navigate immediately
-
-      setShowHint(false);
-      runNavigationLoop();
-    },
-    [runNavigationLoop]
-  );
-
-  const stopNavigation = useCallback(() => {
-    const state = navigationState.current;
-    state.direction = 0;
-    if (state.animationFrame) {
-      cancelAnimationFrame(state.animationFrame);
-      state.animationFrame = 0;
+  const prevPhoto = () => {
+    if (currentIndex > 0) {
+      setPressedButton("prev");
+      setTimeout(() => setPressedButton(null), 150);
+      goToPhoto(currentIndex - 1);
     }
-  }, []);
+  };
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't interfere with other inputs
       if (
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement
@@ -158,60 +45,31 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
         return;
       }
 
-      // Ignore key repeats - we handle acceleration ourselves
-      if (e.repeat) {
-        e.preventDefault();
-        return;
-      }
-
       switch (e.key) {
         case "ArrowDown":
         case "ArrowRight":
-        case "j":
           e.preventDefault();
-          startNavigation(1);
+          nextPhoto();
           break;
         case "ArrowUp":
         case "ArrowLeft":
-        case "k":
           e.preventDefault();
-          startNavigation(-1);
+          prevPhoto();
           break;
         case "Home":
           e.preventDefault();
-          scrollToPhoto(0);
-          setShowHint(false);
+          goToPhoto(0);
           break;
         case "End":
           e.preventDefault();
-          scrollToPhoto(photos.length - 1);
-          setShowHint(false);
+          goToPhoto(photos.length - 1);
           break;
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      const navKeys = [
-        "ArrowDown",
-        "ArrowRight",
-        "ArrowUp",
-        "ArrowLeft",
-        "j",
-        "k",
-      ];
-      if (navKeys.includes(e.key)) {
-        stopNavigation();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-      stopNavigation();
-    };
-  }, [startNavigation, stopNavigation, scrollToPhoto, photos.length]);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentIndex, photos.length]);
 
   // Hide hint after a delay
   useEffect(() => {
@@ -219,72 +77,129 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
     return () => clearTimeout(timer);
   }, []);
 
+  const currentPhoto = photos[currentIndex];
+
   return (
-    <>
-      {/* Keyboard hint */}
-      <div
-        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-opacity duration-500 ${
-          showHint ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="bg-black/70 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full flex items-center gap-3">
-          <span className="flex items-center gap-1">
-            <kbd className="bg-white/20 px-2 py-0.5 rounded text-xs">↑</kbd>
-            <kbd className="bg-white/20 px-2 py-0.5 rounded text-xs">↓</kbd>
-          </span>
-          <span>Navigate photos</span>
+    <div className="flex h-[calc(100vh-4rem)]">
+      {/* Left side - Photo (70%) */}
+      <div className="w-[70%] relative flex items-center justify-center p-12">
+        <picture className="relative max-w-full max-h-full">
+          <source
+            media="(color-gamut: p3)"
+            srcSet={`/photos/p3/${currentPhoto}.jpeg`}
+          />
+          <img
+            src={`/photos/srgb/${currentPhoto}.jpeg`}
+            alt={`Photo ${currentIndex + 1}`}
+            className="max-w-full max-h-[calc(100vh-16rem)] w-auto h-auto object-contain"
+          />
+        </picture>
+
+        {/* Keyboard hint */}
+        {showHint && (
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 transition-opacity duration-500">
+            <div className="bg-popover text-popover-foreground text-sm px-4 py-2 rounded-full flex items-center gap-3 border border-border shadow-lg">
+              <span className="flex items-center gap-1">
+                <kbd className="bg-muted px-2 py-0.5 rounded text-xs">
+                  ←
+                </kbd>
+                <kbd className="bg-muted px-2 py-0.5 rounded text-xs">
+                  →
+                </kbd>
+              </span>
+              <span>Navigate photos</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Right side - Text (30%) */}
+      <div className="w-[30%] p-12 flex flex-col justify-center border-l border-border relative">
+        {/* Navigation buttons - bottom left, stacked vertically */}
+        <div className="absolute bottom-8 left-12 flex flex-col gap-3">
+          <button
+            onClick={prevPhoto}
+            disabled={currentIndex === 0}
+            className={`group relative ${
+              currentIndex === 0 ? "opacity-30 cursor-not-allowed" : ""
+            }`}
+            aria-label="Previous photo"
+          >
+            <div
+              className={`w-14 h-14 flex items-center justify-center rounded-lg bg-muted border border-border transition-all duration-150 ${
+                pressedButton === "prev"
+                  ? "translate-y-1 shadow-none"
+                  : "shadow-[0_4px_0_0_rgba(0,0,0,0.1)] group-hover:shadow-[0_2px_0_0_rgba(0,0,0,0.1)] group-hover:translate-y-[2px]"
+              } ${
+                currentIndex > 0
+                  ? "group-hover:bg-accent group-active:translate-y-1 group-active:shadow-none"
+                  : ""
+              }`}
+            >
+              <svg
+                className="w-6 h-6 text-foreground"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+              </svg>
+            </div>
+          </button>
+
+          <button
+            onClick={nextPhoto}
+            disabled={currentIndex === photos.length - 1}
+            className={`group relative ${
+              currentIndex === photos.length - 1
+                ? "opacity-30 cursor-not-allowed"
+                : ""
+            }`}
+            aria-label="Next photo"
+          >
+            <div
+              className={`w-14 h-14 flex items-center justify-center rounded-lg bg-muted border border-border transition-all duration-150 ${
+                pressedButton === "next"
+                  ? "translate-y-1 shadow-none"
+                  : "shadow-[0_4px_0_0_rgba(0,0,0,0.1)] group-hover:shadow-[0_2px_0_0_rgba(0,0,0,0.1)] group-hover:translate-y-[2px]"
+              } ${
+                currentIndex < photos.length - 1
+                  ? "group-hover:bg-accent group-active:translate-y-1 group-active:shadow-none"
+                  : ""
+              }`}
+            >
+              <svg
+                className="w-6 h-6 text-foreground"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+              </svg>
+            </div>
+          </button>
+        </div>
+
+        {/* Text content - vertically centered */}
+        <div className="text-foreground space-y-6">
+          <p className="text-base leading-relaxed">
+            I'm no professional photographer, just someone who can't walk
+            past interesting light or a good texture without reaching for my
+            phone.
+          </p>
+          <p className="text-base leading-relaxed">
+            These are some moments I've collected along the way — nothing too
+            serious, just things that caught my eye.
+          </p>
+          <p className="text-base leading-relaxed">
+            I used to post these on Instagram, but this feels like a better
+            place for them now.
+          </p>
+        </div>
+
+        {/* Photo counter */}
+        <div className="absolute bottom-8 right-8 text-muted-foreground text-sm font-mono">
+          {currentIndex + 1} / {photos.length}
         </div>
       </div>
-
-      {/* Progress indicator - horizontal lines */}
-      <div className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-2">
-        {photos.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollToPhoto(index)}
-            className={`h-1 w-6 rounded-full transition-opacity duration-200 cursor-pointer ${
-              index === currentIndex
-                ? "bg-white opacity-100"
-                : "bg-white opacity-30 hover:opacity-60"
-            }`}
-            aria-label={`Go to photo ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Photo counter */}
-      <div className="fixed right-4 bottom-6 z-50 bg-black/50 backdrop-blur-sm text-white text-sm px-3 py-1.5 rounded-full font-mono">
-        {currentIndex + 1} / {photos.length}
-      </div>
-
-      {/* Photos */}
-      <div className="flex flex-col gap-10">
-        {photos.map((num, index) => (
-          <a
-            key={num}
-            ref={(el) => {
-              photoRefs.current[index] = el;
-            }}
-            href={`/photos/p3/${num}.jpeg`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.4)] overflow-hidden transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
-          >
-            <picture>
-              <source
-                media="(color-gamut: p3)"
-                srcSet={`/photos/p3/${num}.jpeg`}
-              />
-              <img
-                src={`/photos/srgb/${num}.jpeg`}
-                alt={`Photo ${num}`}
-                loading="lazy"
-                className="w-full h-auto block"
-              />
-            </picture>
-          </a>
-        ))}
-      </div>
-    </>
+    </div>
   );
 }

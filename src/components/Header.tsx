@@ -61,14 +61,14 @@ export function Header() {
                         href="https://calendly.com/ramshorst/30min"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                        className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:scale-[1.04] active:scale-[0.96] transition-transform"
                     >
                         Let's talk
                     </Link>
 
                     <button
                         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        className="p-2 rounded-full hover:bg-muted transition-colors"
+                        className="p-2 rounded-full hover:bg-muted hover:scale-110 active:scale-90 transition-all duration-150"
                         aria-label="Toggle theme"
                     >
                         {mounted ? (

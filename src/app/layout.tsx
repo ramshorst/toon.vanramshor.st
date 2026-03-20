@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ColorPickerFloating } from "@/components/ColorPickerFloating";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +51,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <ColorPickerFloating />
         </Providers>
       </body>
     </html>
