@@ -1,5 +1,6 @@
 import { getBlogPost, getBlogPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { TableOfContents } from "@/components/TableOfContents";
 
 export async function generateStaticParams() {
@@ -34,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     return (
         <div className="max-w-6xl mx-auto py-12 flex gap-12 relative">
             <article className="flex-1 max-w-3xl mx-auto">
-                <header className="mb-12 text-center">
+                <header className="mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
                     <time className="text-muted-foreground">
                         {new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -49,16 +50,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     {post.content}
                 </div>
 
-                {post.lastUpdated && (
-                    <footer className="mt-12 pt-6 border-t border-border text-sm text-muted-foreground text-center">
-                        Last updated on{" "}
-                        {new Date(post.lastUpdated).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        })}
-                    </footer>
-                )}
+                <footer className="mt-12 pt-6 border-t border-border text-sm text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-3">
+                    {post.lastUpdated ? (
+                        <span>
+                            Last updated on{" "}
+                            {new Date(post.lastUpdated).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })}
+                        </span>
+                    ) : (
+                        <span />
+                    )}
+                    <Link
+                        href={`https://github.com/ramshorst/toon.vanramshor.st/blob/main/src/content/${slug}.mdx`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-primary transition-colors"
+                    >
+                        Suggest an edit on GitHub →
+                    </Link>
+                </footer>
             </article>
             <TableOfContents />
         </div>

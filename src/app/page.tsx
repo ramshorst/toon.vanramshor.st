@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { getBlogPosts, getCategories, getPopularPosts } from "@/lib/blog";
+import { getProjects } from "@/lib/projects";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -8,10 +9,12 @@ export default async function Home() {
   const recentPosts = posts.slice(0, 5);
   const popularPosts = await getPopularPosts();
   const categories = await getCategories();
+  const projects = await getProjects();
+  const projectYears = [...new Set(projects.map((p) => p.year))].sort((a, b) => a - b);
 
   return (
     <div className="space-y-20">
-      <Hero />
+      <Hero projectYears={projectYears} />
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
         <main className="lg:col-span-8">

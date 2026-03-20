@@ -51,7 +51,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
-          <ColorPickerFloating />
+          {/* <ColorPickerFloating /> */}
         </Providers>
       </body>
     </html>

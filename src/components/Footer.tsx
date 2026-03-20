@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Rss } from "lucide-react";
+import { Github, Linkedin, Rss, Heart } from "lucide-react";
 
 export function Footer() {
     return (
@@ -11,7 +11,7 @@ export function Footer() {
                             Toon van Ramshorst
                         </Link>
                         <p className="text-muted-foreground max-w-sm text-lg">
-                            Crafting digital experiences with code, design, and a touch of AI magic.
+                            Design engineer. Building things people use, at the intersection of code and craft.
                         </p>
                     </div>
 
@@ -70,11 +70,11 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
+                <div className="pt-4 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1.5">
                         <span>Designed & Built with</span>
-                        <span className="text-red-500 animate-pulse">❤</span>
-                        <span>and AI</span>
+                        <Heart className="h-3 w-3 text-red-500 animate-pulse fill-red-500" />
+                        <span>in France</span>
                     </div>
                     <div>
                         © 2008 - present

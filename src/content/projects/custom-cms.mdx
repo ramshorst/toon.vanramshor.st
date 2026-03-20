@@ -1,0 +1,26 @@
+---
+company: "Custom CMS"
+year: 2004
+endYear: 2005
+sector: "developer tools"
+role: "Founder"
+description: "Built a custom PHP/MySQL CMS to speed up site development by defining data structures in PHP and generating both admin forms and database tables from the same source of truth. Included authentication, multilingual support, CRUD tooling, and a shared codebase designed to power multiple websites."
+tags: ["PHP", "MySQL", "CMS", "CRUD", "Multilingual"]
+color: "#0f766e"
+---
+
+## Context
+
+After building an earlier marketplace product, I became interested in abstracting the repetitive parts of web development. The idea was to describe content models in PHP and use that to generate both the editing interface and the underlying MySQL tables.
+
+## What I built
+
+I developed a reusable CMS in PHP with login-protected administration, table views, item editing, creation, deletion, and multilingual support. It was designed so multiple websites could run on the same CMS codebase, with subdomain-based routing and project separation.
+
+## The technical challenge
+
+The core challenge was building a lightweight meta-layer on top of PHP and MySQL: one source of truth for structure, admin UI, and persistence. That meant dynamically generating forms, keeping schemas in sync, and designing the system to work across several sites from a shared codebase.
+
+## Outcome
+
+This project taught me how to think in systems rather than pages: schema design, abstraction, reuse, and multi-project architecture. It was an early step toward productising my own tooling, even if the shared-CMS approach later proved to have tradeoffs.

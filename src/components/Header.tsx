@@ -47,6 +47,9 @@ export function Header() {
                 </Link>
 
                 <nav className="flex items-center gap-6">
+                    <Link href="/projects" className="text-sm font-medium hover:text-primary transition-colors">
+                        Projects
+                    </Link>
                     <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
                         About
                     </Link>
