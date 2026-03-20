@@ -1,0 +1,29 @@
+---
+company: "SoftRH"
+year: 2021
+endYear: 2024
+sector: "SaaS"
+role: "Founder"
+description: "Founded a network of 26 niche B2B SaaS comparison websites covering 35,000 static pages. Helped users discover and compare SaaS software across industries, with heavy SEO optimization, automated scraping pipelines, and early experimentation with GPT-3 content generation."
+tags: ["TypeScript", "AWS", "SEO", "Scraping", "GPT-3", "UI Design", "GitHub Actions", "CDN"]
+---
+
+## Context
+
+softRH.fr was a galaxy of 26 niche websites, each focused on a specific vertical of B2B SaaS software. The core product was a comparison engine: users could discover, evaluate, and compare SaaS tools in their category. Collectively the network served 35,000 static pages.
+
+## What I built
+
+The entire operation was built and run as a founder. Each site was optimized for search — schema.org structured data, Lighthouse scores of 100/100, page loads under 100ms, and CDN delivery on AWS. The content pipeline was heavily automated: I scraped the homepages of SaaS products to extract descriptions, pricing signals, and feature information, then used word spinning and GPT-3 content generation to produce articles at scale.
+
+Scraping, content generation, and deployments were all scheduled and orchestrated via GitHub Actions. The architecture prioritized static output for performance and SEO — fast pages rank better and cost less to serve.
+
+## The interesting problem
+
+Running 26 websites as a solo founder meant every manual process had to be automated. Keeping 35,000 pages fresh required scheduled scraping runs that would detect changes on product homepages and trigger targeted redeployments. GPT-3 was early and unreliable — working with it in production required significant prompt engineering and output validation to keep content quality acceptable.
+
+Achieving 100/100 Lighthouse scores consistently across a large static site network was an exercise in discipline: image optimization, critical CSS inlining, minimal JavaScript, proper caching headers, and CDN configuration all had to be right across every template.
+
+## Outcome
+
+The network generated organic SEO traffic across its niches through a combination of technical performance and content volume. It was an early experiment in automated content generation and programmatic SEO at scale — years before these became common playbook items.
