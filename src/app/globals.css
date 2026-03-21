@@ -7,12 +7,12 @@
   /* Light Mode - Nature Theme */
   --background: #fcfdfa;
   /* Creamy off-white */
-  --foreground: #553c30;
-  --tw-prose-headings: #553c30;
+  --foreground: #2a1508;
+  --tw-prose-headings: #2a1508;
   --card: #ffffff;
-  --card-foreground: #553c30;
+  --card-foreground: #2a1508;
   --popover: #ffffff;
-  --popover-foreground: #553c30;
+  --popover-foreground: #2a1508;
   --primary: #d99a63;
   --primary-foreground: #ffffff;
   --secondary: #f3d8bf;
@@ -34,11 +34,11 @@
   /* Dark Mode - Stone Theme */
   --background: #0c0a09;
   /* stone-950 */
-  --foreground: #e7cacc;
+  --foreground: #e8d5bf;
   --card: #1c1917;
-  --card-foreground: #e7cacc;
+  --card-foreground: #e8d5bf;
   --popover: #1c1917;
-  --popover-foreground: #e7cacc;
+  --popover-foreground: #e8d5bf;
   --primary: #e6a689;
   --primary-foreground: #0c0a09;
   --secondary: #292524;

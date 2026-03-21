@@ -55,6 +55,7 @@ import {
     Building2,
     Briefcase,
     MousePointer,
+    Zap,
     type LucideIcon,
 } from "lucide-react";
 
@@ -125,6 +126,8 @@ const LUCIDE_ICONS: Record<string, LucideIcon> = {
     "UX": MousePointer,
     "SaaS": Cloud,
     "Liquid": Code2,
+    "Neon": Zap,
+    "shadcn/ui": Layers,
 };
 
 export function TechBadge({ tag, href }: { tag: string; href?: string }) {

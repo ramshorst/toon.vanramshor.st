@@ -30,7 +30,7 @@ const fadeIn: Variants = {
     }),
 };
 
-export function AboutContent() {
+export function AboutContent({ industryLinks = {}, techLinks = {} }: { industryLinks?: Record<string, string>; techLinks?: Record<string, string> }) {
     return (
         <div className="max-w-3xl mx-auto py-12 px-6">
             <motion.h1
@@ -108,10 +108,17 @@ export function AboutContent() {
                             animate="visible"
                             custom={0.5 + index * 0.07}
                         >
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/60 border border-transparent hover:border-border transition-colors text-sm font-medium">
-                                <Icon size={13} className="text-primary flex-shrink-0" />
-                                {label}
-                            </span>
+                            {industryLinks[label] ? (
+                                <Link href={industryLinks[label]} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/60 border border-transparent hover:border-border transition-colors text-sm font-medium no-underline">
+                                    <Icon size={13} className="text-primary flex-shrink-0" />
+                                    {label}
+                                </Link>
+                            ) : (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/60 border border-transparent hover:border-border transition-colors text-sm font-medium">
+                                    <Icon size={13} className="text-primary flex-shrink-0" />
+                                    {label}
+                                </span>
+                            )}
                         </motion.li>
                     ))}
                 </ul>
@@ -150,10 +157,18 @@ export function AboutContent() {
                             initial="hidden"
                             animate="visible"
                             custom={0.9 + index * 0.05}
-                            className="flex flex-col gap-0.5 px-4 py-3 rounded-xl bg-muted/60 border border-transparent hover:border-border transition-colors"
                         >
-                            <span className="text-sm font-medium">{name}</span>
-                            <span className="text-xs text-muted-foreground">{note}</span>
+                            {techLinks[name] ? (
+                                <Link href={techLinks[name]} className="flex flex-col gap-0.5 px-4 py-3 rounded-xl bg-muted/60 border border-transparent hover:border-border transition-colors no-underline h-full">
+                                    <span className="text-sm font-medium">{name}</span>
+                                    <span className="text-xs text-muted-foreground">{note}</span>
+                                </Link>
+                            ) : (
+                                <div className="flex flex-col gap-0.5 px-4 py-3 rounded-xl bg-muted/60 border border-transparent hover:border-border transition-colors">
+                                    <span className="text-sm font-medium">{name}</span>
+                                    <span className="text-xs text-muted-foreground">{note}</span>
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </div>
