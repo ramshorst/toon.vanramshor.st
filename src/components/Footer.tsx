@@ -11,7 +11,7 @@ export function Footer() {
                             Toon van Ramshorst
                         </Link>
                         <p className="text-muted-foreground max-w-sm text-lg">
-                            Design engineer. Building things people use, at the intersection of code and craft.
+                            <Link href="/web-development/design-engineer" className="underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-muted-foreground/60 transition-colors">Design engineer</Link>. Building things people use, at the intersection of code and craft.
                         </p>
                     </div>
 
@@ -26,6 +26,11 @@ export function Footer() {
                             <li>
                                 <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
                                     Blog
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/projects" className="text-muted-foreground hover:text-primary transition-colors">
+                                    Projects
                                 </Link>
                             </li>
                             <li>

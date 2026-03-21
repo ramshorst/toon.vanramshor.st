@@ -1,5 +1,5 @@
 ---
-title: "Design + code: the hybrid role nobody had a job title for (yet)"
+title: "Design engineer, the new role"
 publishedAt: "2025-12-10"
 summary: "Not a pure designer. Not a pure engineer. Something in between—and that's where a lot of the leverage ends up."
 category: "web-development"
@@ -16,7 +16,7 @@ Then, slowly, that role fragmented into a parade of specialisations. Design beca
 
 But in 2025, something's shifting again. The people doing the most interesting work tend to combine both sides—design instinct and coding ability—and that combination is turning out to be surprisingly useful. Not a pure designer, not a pure engineer. Someone who thinks in terms of interaction, aesthetics, and user journeys, and can express those ideas directly in working code.
 
----
+<VennDiagram />
 
 ## How We Lost the Full-Stack Designer
 
@@ -28,10 +28,7 @@ As web apps got more complex, the industry optimised for scale. Fair enough. But
 
 Handoffs multiplied:
 
-1. Designer produces static mockups
-2. Engineer translates them into React, Angular, or Vue
-3. Product reviews and asks for tweaks
-4. Repeat forever
+<HandoffPipeline />
 
 Somewhere in this loop, designers lost direct access to the actual medium. They started drawing *representations* of interfaces instead of working in the real material: HTML, CSS, JavaScript.
 
@@ -65,52 +62,6 @@ The human judgment part—what should this *feel* like? what's the right interac
 
 ---
 
-## Tools That Stay Close to the Material
-
-Tools matter a lot here. The ones that work best for this role tend to be ones that respect the web's native materials rather than abstracting far away from them.
-
-### Svelte: Feels Like Enhanced HTML
-
-Svelte is weirdly close to how the web actually works:
-
-- **Markup first.** You write HTML-ish templates with minimal ceremony.
-- **Scoped styles.** CSS lives right next to the component it belongs to.
-- **Reactivity without boilerplate.** State just… updates. No hooks, no lifecycle gymnastics.
-
-For a designer who codes—or an engineer with strong design instincts—this matters because the distance between layout, interaction, and styling is tiny. You open one `.svelte` file and see the whole picture. It doesn't feel like wrestling a framework; it feels like enhanced HTML/CSS/JS.
-
-### htmx: Design in HTML
-
-htmx goes even further toward the native model:
-
-- Declare dynamic behaviour directly in your markup (`hx-get`, `hx-post`, `hx-swap`)
-- Lean on server-rendered HTML and progressive enhancement
-- Build rich interactions without shipping a massive SPA
-
-For the hybrid, this means prototyping by editing templates rather than wiring up a full client-side app. You stay close to the browser's mental model—requests, responses, HTML updates—while still shipping genuinely dynamic features.
-
-These two are examples of a broader principle: the best tools for this role are the ones that **lower the complexity tax** on turning a design idea into production code. There's no single right answer, but tools that stay readable tend to stay editable.
-
----
-
-## Taking Back Control Over Complexity
-
-One real advantage of working across both disciplines: **the ability to push back on unnecessary complexity**.
-
-We've somehow normalised:
-
-- Multi-megabyte JavaScript bundles for trivial UIs
-- Deep npm trees for even simple components
-- Build systems that need their own architecture diagrams
-
-The specialist pipeline makes this hard to resist. Engineers default to familiar stacks; designers don't have enough context to challenge them; product has bigger things to worry about.
-
-The hybrid can say: "No, let's not do that. There's a simpler pattern that gets us the same experience." And they can back it up—not just as an opinion, but by actually building the simpler thing.
-
-This isn't a full solution to web bloat. But it's leverage. You're in the room with the context to make that call and the skills to execute on it.
-
----
-
 ## Designers Owning More of the Product
 
 Here's what the shift actually looks like in practice:
@@ -135,6 +86,8 @@ Every handoff is a compression. Something gets lost. The hybrid removes handoffs
 
 That's why this tends to punch above its weight on small teams, early products, and anything where speed and coherence matter more than scale.
 
-The tools are there. The AI assist is real. For people who enjoy both design *and* code, these are genuinely good years to be working on the web.
+[The tools are there.](/web-development/against-the-abstraction-ladder) The AI assist is real. For people who enjoy both design *and* code, these are genuinely good years to be working on the web.
+
+Oh, and about that job title? They're calling it a **design engineer** now. It's starting to show up in job listings, team org charts, and conference talks. The role that used to be a footnote—or a source of identity crisis—has a name.
 
 You don't have to choose between "real engineer" and "just a designer." You can be the person who makes the thing—and understands the whole of it.

@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
-import { getBlogPosts, getCategories, getPopularPosts } from "@/lib/blog";
+import { TechStack } from "@/components/TechStack";
+import { getBlogPosts } from "@/lib/blog";
 import { getProjects } from "@/lib/projects";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -7,102 +8,88 @@ import { ArrowRight } from "lucide-react";
 export default async function Home() {
   const posts = await getBlogPosts();
   const recentPosts = posts.slice(0, 5);
-  const popularPosts = await getPopularPosts();
-  const categories = await getCategories();
   const projects = await getProjects();
   const projectYears = [...new Set(projects.map((p) => p.year))].sort((a, b) => a - b);
+
+  // Count tag usage and find the most recent project per tag
+  const tagCounts = new Map<string, number>();
+  const tagLatestProject = new Map<string, { slug: string; year: number }>();
+
+  for (const project of projects) {
+    for (const tag of project.tags) {
+      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+      const current = tagLatestProject.get(tag);
+      if (!current || project.year > current.year) {
+        tagLatestProject.set(tag, { slug: project.slug, year: project.year });
+      }
+    }
+  }
+
+  const DEPRIORITIZED = new Set([
+    "PHP", "MySQL", "SEO", "Multilingual", "Food Tech", "Exhibition",
+    "Architecture", "Urban Planning", "Hospitality", "Spatial Reasoning",
+    "IMAP", "CRUD", "CMS", "Storybook", "B2B", "Content Architecture",
+  ]);
+
+  const sortedTags = [...tagCounts.entries()]
+    .sort((a, b) => {
+      const aLow = DEPRIORITIZED.has(a[0]);
+      const bLow = DEPRIORITIZED.has(b[0]);
+      if (aLow !== bLow) return aLow ? 1 : -1;
+      return b[1] - a[1];
+    })
+    .map(([tag]) => tag);
+
+  const tagLinks: Record<string, string> = {};
+  for (const tag of sortedTags) {
+    const proj = tagLatestProject.get(tag);
+    if (proj) tagLinks[tag] = `/projects#${proj.slug}`;
+  }
 
   return (
     <div className="space-y-20">
       <Hero projectYears={projectYears} />
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
-        <main className="lg:col-span-8">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Recent Posts</h2>
-            <Link href="/blog" className="flex items-center text-primary hover:underline group">
-              View all posts
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+      <div className="max-w-2xl mx-auto space-y-20">
+
+        {/* Tech stack */}
+        {sortedTags.length > 0 && (
+          <section>
+            <TechStack tags={sortedTags} tagLinks={tagLinks} />
+          </section>
+        )}
+
+        {/* Recent writing */}
+        <section>
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Recent writing</h2>
+            <Link href="/blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              All posts
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
 
-          <div className="grid gap-8">
+          <div className="divide-y divide-border/60">
             {recentPosts.map((post) => (
               <Link
                 key={post.slug}
                 href={post.category ? `/${post.category}/${post.slug}` : `/blog/${post.slug}`}
-                className="block group"
+                className="flex items-baseline justify-between gap-6 py-5 group"
               >
-                <article className="space-y-3">
-                  {post.category && (
-                    <div className="text-sm font-medium text-primary uppercase tracking-wider">
-                      {post.category}
-                    </div>
-                  )}
-                  <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
-                  <div className="text-sm text-muted-foreground">
-                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">{post.summary}</p>
-                  <div className="text-primary font-medium group-hover:underline inline-flex items-center">
-                    Read more <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </article>
+                <h3 className="text-base font-medium group-hover:text-primary transition-colors leading-snug">
+                  {post.title}
+                </h3>
+                <time className="shrink-0 text-sm text-muted-foreground tabular-nums">
+                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </time>
               </Link>
             ))}
           </div>
-        </main>
+        </section>
 
-        <aside className="hidden lg:block lg:col-span-4 space-y-12">
-          {popularPosts.length > 0 && (
-            <section>
-              <h3 className="text-xl font-bold mb-6 pb-2 border-b border-border">Popular Posts</h3>
-              <div className="space-y-6">
-                {popularPosts.map((post) => (
-                  <Link
-                    key={post.slug}
-                    href={post.category ? `/${post.category}/${post.slug}` : `/blog/${post.slug}`}
-                    className="block group"
-                  >
-                    <h4 className="font-bold group-hover:text-primary transition-colors mb-1">
-                      {post.title}
-                    </h4>
-                    <div className="text-sm text-muted-foreground">
-                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {categories.length > 0 && (
-            <section>
-              <h3 className="text-xl font-bold mb-6 pb-2 border-b border-border">Categories</h3>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <Link
-                    key={category}
-                    href={`/${category}`} // Note: This route needs to be implemented or handled
-                    className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm hover:bg-secondary/80 transition-colors"
-                  >
-                    {category}
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-        </aside>
       </div>
     </div>
   );

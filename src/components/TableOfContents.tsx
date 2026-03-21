@@ -9,7 +9,7 @@ type Heading = {
     level: number;
 };
 
-export function TableOfContents() {
+export function TableOfContents({ inline }: { inline?: boolean }) {
     const [headings, setHeadings] = useState<Heading[]>([]);
     const [activeId, setActiveId] = useState<string>("");
     const [mounted, setMounted] = useState(false);
@@ -45,6 +45,47 @@ export function TableOfContents() {
     }, []);
 
     if (headings.length < 3) return null;
+
+    if (inline) {
+        return (
+            <nav className="mb-12 border-y border-border py-6">
+                <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                    {headings.map((heading, index) => (
+                        <li
+                            key={heading.id}
+                            style={{
+                                paddingLeft: `${(heading.level - 2) * 12}px`,
+                                opacity: 0,
+                                ...(mounted
+                                    ? { animation: `tocFadeIn 0.45s ease ${0.1 + index * 0.04}s forwards` }
+                                    : {}),
+                            }}
+                        >
+                            <a
+                                href={`#${heading.id}`}
+                                className={cn(
+                                    "transition-colors duration-300 hover:text-primary",
+                                    activeId === heading.id
+                                        ? "text-primary font-medium"
+                                        : "text-muted-foreground"
+                                )}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const el = document.getElementById(heading.id);
+                                    if (!el) return;
+                                    const top = el.getBoundingClientRect().top + window.scrollY - 96;
+                                    window.scrollTo({ top, behavior: "smooth" });
+                                    setActiveId(heading.id);
+                                }}
+                            >
+                                {heading.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        );
+    }
 
     return (
         <nav className="hidden lg:block sticky top-32 ml-12 w-64 max-h-[calc(100vh-8rem)] overflow-auto">

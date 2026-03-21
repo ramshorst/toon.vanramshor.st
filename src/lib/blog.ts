@@ -14,6 +14,8 @@ export type BlogPost = {
     content: React.ReactNode;
     category?: string;
     popular?: boolean;
+    coverImage?: string;
+    noToc?: boolean;
 };
 
 export function getBlogSlugs() {
@@ -47,6 +49,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
                     summary: string;
                     category?: string;
                     popular?: boolean;
+                    coverImage?: string;
+                    noToc?: boolean;
                 }>({
                     source,
                     options: { parseFrontmatter: true },
@@ -62,6 +66,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
                     content,
                     category: frontmatter.category,
                     popular: frontmatter.popular,
+                    coverImage: frontmatter.coverImage,
+                    noToc: frontmatter.noToc,
                 };
             })
     );

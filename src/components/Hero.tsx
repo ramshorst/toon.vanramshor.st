@@ -59,7 +59,7 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="text-xl md:text-2xl text-muted-foreground mb-10"
                 >
-                    Design engineer who loves turning ideas into things people actually use. I write about building, shipping, and the craft in between.
+                    <Link href="/web-development/design-engineer" className="underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-muted-foreground/60 transition-colors">Design engineer</Link> who loves turning ideas into things people actually use. I write about building, shipping, and the craft in between.
                 </motion.p>
 
                 <motion.div

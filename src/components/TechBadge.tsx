@@ -127,16 +127,16 @@ const LUCIDE_ICONS: Record<string, LucideIcon> = {
     "Liquid": Code2,
 };
 
-export function TechBadge({ tag }: { tag: string }) {
+export function TechBadge({ tag, href }: { tag: string; href?: string }) {
     const simpleIcon = SIMPLE_ICONS[tag];
     const LucideIconComponent = LUCIDE_ICONS[tag];
 
-    return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground text-xs font-medium">
+    const inner = (
+        <>
             {simpleIcon && (
                 <svg
-                    width="10"
-                    height="10"
+                    width="11"
+                    height="11"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden
@@ -146,9 +146,21 @@ export function TechBadge({ tag }: { tag: string }) {
                 </svg>
             )}
             {!simpleIcon && LucideIconComponent && (
-                <LucideIconComponent size={10} className="shrink-0 opacity-70" />
+                <LucideIconComponent size={11} className="shrink-0 opacity-70" />
             )}
             {tag}
-        </span>
+        </>
     );
+
+    const className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium";
+
+    if (href) {
+        return (
+            <a href={href} className={`${className} hover:bg-secondary/70 transition-colors`}>
+                {inner}
+            </a>
+        );
+    }
+
+    return <span className={className}>{inner}</span>;
 }

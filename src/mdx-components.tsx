@@ -1,4 +1,6 @@
 import type { MDXComponents } from "mdx/types";
+import { VennDiagram } from "@/components/VennDiagram";
+import { HandoffPipeline } from "@/components/HandoffPipeline";
 
 function Screenshot({
     src,
@@ -69,5 +71,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h2: createHeading(2),
         h3: createHeading(3),
         Screenshot,
+        VennDiagram,
+        HandoffPipeline,
     };
 }

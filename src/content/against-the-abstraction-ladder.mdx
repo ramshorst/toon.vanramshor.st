@@ -1,0 +1,60 @@
+---
+title: "Against the Abstraction Ladder"
+publishedAt: "2025-12-17"
+summary: "Every layer you add between your idea and the browser is a layer you have to understand, maintain, and debug. Maybe ship less of it."
+category: "web-development"
+---
+
+There's a default pattern in modern web development: when something feels complex, add a tool to manage that complexity. When the tool feels complex, add another tool to manage that. Climb the abstraction ladder one rung at a time until you're so far from the browser that you've forgotten what you were trying to build.
+
+It works. Until it doesn't.
+
+## The Web Already Has Good Primitives
+
+HTML handles structure. CSS handles presentation. JavaScript handles behaviour. These aren't limitations—they're a remarkably capable foundation that billions of devices already understand natively.
+
+The browser can do a lot without help. Forms submit. Links navigate. CSS transitions animate. Server-rendered HTML is fast by default. Most of what gets reached for a framework to solve was never really a framework problem to begin with.
+
+Somewhere along the way, the industry started treating the platform itself as a problem to be abstracted over rather than a material to work with.
+
+---
+
+## Svelte: Feels Like Enhanced HTML
+
+Svelte is a useful counterexample. It doesn't try to replace how the web works—it leans into it:
+
+- **Markup first.** You write HTML with minimal ceremony. The component is the file.
+- **Scoped styles.** CSS lives next to the markup it belongs to. No class name gymnastics.
+- **Reactivity without boilerplate.** State updates. No hooks, no effects for things that should be simple.
+
+The result is code you can read without knowing the framework. Open a `.svelte` file six months later and it still makes sense. That's rarer than it should be.
+
+---
+
+## htmx: Dynamic Without the SPA
+
+htmx makes a different bet: what if the browser's native model—requests, responses, HTML—was good enough, and we just needed a thin layer to make it more expressive?
+
+- Declare behaviour in your markup: `hx-get`, `hx-post`, `hx-swap`
+- The server returns HTML. The browser swaps it in. That's it.
+- No client-side state management. No bundler. No hydration.
+
+It's not for every project. But for a lot of projects, it's far more than enough—and the codebase that results is orders of magnitude simpler than the equivalent SPA.
+
+---
+
+## The Complexity Tax
+
+We've normalised some expensive habits:
+
+- Multi-megabyte JavaScript bundles for interfaces that display a list of items
+- Dependency trees dozens of packages deep for functionality the platform already ships
+- Build pipelines complicated enough to need their own documentation
+
+None of this is free. Every dependency is a maintenance surface. Every abstraction is something to learn, something to upgrade, something to debug when it behaves unexpectedly. The complexity tax is real, and it compounds.
+
+The alternative isn't to stop building ambitious things. It's to be deliberate about which layers actually earn their place—and skeptical of the ones that crept in because they were already in the starter template.
+
+Readable code stays editable. Simple systems stay debuggable. Close to the platform means close to understanding what's actually happening.
+
+That's worth something.

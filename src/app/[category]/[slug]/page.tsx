@@ -87,7 +87,7 @@ export default async function CategorizedBlogPostPage({ params }: { params: Prom
                     </Link>
                 </footer>
             </article>
-            <TableOfContents />
+            {!post.noToc && <TableOfContents />}
         </div>
     );
 }
