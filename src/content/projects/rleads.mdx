@@ -1,0 +1,30 @@
+---
+company: "r/leads"
+year: 2026
+sector: "SaaS"
+role: "Co-Founder"
+description: "Built r/leads with a co-founder — a SaaS tool that turns Reddit into a customer acquisition channel. The product monitors subreddits for buyer intent signals in real time using vector embeddings, alerts founders via Slack, Discord or email, and provides AI-suggested responses to help engage authentically without being spammy."
+tags: ["React", "TypeScript", "AI", "Embeddings", "Railway", "Docker", "SaaS"]
+url: "https://rleads.ai/"
+color: "#7c3aed"
+---
+
+## Context
+
+r/leads is a side project built with a co-founder around a simple insight: Reddit is full of people actively looking for solutions, but finding those conversations manually is slow, inconsistent, and doesn't scale. The product automates that — monitoring subreddits for genuine buyer intent signals and surfacing opportunities the moment they appear.
+
+<Screenshot src="/rleads-hero.png" alt="r/leads landing page" display="wide" href="https://rleads.ai/" />
+
+## What we built
+
+The stack is React and TypeScript on the front end. The core matching engine uses vector embeddings to identify relevant opportunities — posts are embedded and compared against a product description vector, giving semantic matching that goes well beyond keyword search. This lets the product detect genuine buying intent and pain points rather than just literal mentions.
+
+The back end is deployed on Railway, with Cloudfront in front for distribution. When a match is found, the user gets an alert within 15 minutes via Slack, Discord, or email, along with an AI-suggested response tailored to the thread.
+
+<Screenshot src="/rleads-app.png" alt="Opportunity feed with AI-suggested response" display="wide" href="https://rleads.ai/" />
+
+## How we built it
+
+A meaningful part of the development was done using Claude Code in yolo mode — letting the agent run autonomously across the codebase, each session isolated in its own Docker container. It was a genuine test of AI-assisted development at speed, and it worked.
+
+<Screenshot src="/rleads-login.png" alt="Login screen" display="wide" href="https://rleads.ai/login" />
