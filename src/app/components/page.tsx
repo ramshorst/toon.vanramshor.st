@@ -13,7 +13,7 @@ const PREVIEWS: Record<string, React.ReactNode> = {
 
 export default function ComponentsPage() {
     return (
-        <main className="pt-16 pb-24 overflow-hidden">
+        <main className="pt-16 pb-24">
             <div className="container mx-auto px-4 mb-12">
                 <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Explorations</p>
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Components</h1>
