@@ -4,9 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { COMPONENTS } from "@/lib/components-registry";
 import { SatisfyingButton } from "@/components/explorations/SatisfyingButton";
+import { BreathingLoader } from "@/components/explorations/BreathingLoader";
 
 const PREVIEWS: Record<string, React.ReactNode> = {
     "/explorations/satisfying-button": <SatisfyingButton />,
+    "/explorations/breathing-loader": <BreathingLoader />,
 };
 
 export default function ComponentsPage() {
@@ -28,7 +30,7 @@ export default function ComponentsPage() {
                     paddingLeft: "max(1rem, calc((100vw - 80rem) / 2 + 1rem))",
                     scrollSnapType: "x mandatory",
                     WebkitOverflowScrolling: "touch",
-                    maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+                    maskImage: "linear-gradient(to right, black 0%, black 88%, transparent 100%)",
                     scrollbarWidth: "none",
                 }}
             >
@@ -56,7 +58,7 @@ export default function ComponentsPage() {
                                         <p className="font-medium text-sm">{component.title}</p>
                                         <p className="text-xs text-muted-foreground mt-0.5">{component.description}</p>
                                     </div>
-                                    <span className="text-muted-foreground/40 group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all duration-200 text-sm ml-4 shrink-0">→</span>
+                                    <span className="text-muted-foreground/40 group-hover:text-muted-foreground group-hover:translate-x-0.5 transition-all duration-200 text-sm ml-4 shrink-0 leading-none flex items-center">→</span>
                                 </div>
                             </div>
                         </Link>

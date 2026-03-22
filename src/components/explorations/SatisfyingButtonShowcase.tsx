@@ -1,44 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { SatisfyingButton, BUTTON_THEMES } from "./SatisfyingButton";
+import { ColorSwatchPicker } from "./ColorSwatchPicker";
+import { ThemeToggle } from "./ThemeToggle";
 
-export function SatisfyingButtonShowcase() {
+const SWATCHES = BUTTON_THEMES.map((t) => t.swatch);
+
+export function SatisfyingButtonShowcase({ onThemeChange }: { onThemeChange?: (v: "light" | "dark") => void }) {
     const [activeTheme, setActiveTheme] = useState(0);
+    const [cardTheme, setCardTheme] = useState<"light" | "dark">("light");
+
+    useEffect(() => {
+        const t = document.documentElement.getAttribute("data-theme");
+        setCardTheme(t === "dark" ? "dark" : "light");
+    }, []);
+
+    function handleThemeChange(v: "light" | "dark") {
+        setCardTheme(v);
+        onThemeChange?.(v);
+    }
 
     return (
-        <>
+        <div data-theme={cardTheme} className="bg-card -m-6 p-6 rounded-2xl">
             <div className="flex items-center justify-center py-8">
-                <SatisfyingButton theme={BUTTON_THEMES[activeTheme]} />
+                <SatisfyingButton theme={BUTTON_THEMES[activeTheme]} isDark={cardTheme === "dark"} />
             </div>
             <div className="border-t border-border/40 pt-4 flex items-center gap-3">
                 <span className="text-xs text-muted-foreground/60">Color</span>
-                <div className="flex items-center gap-2">
-                    {BUTTON_THEMES.map((t, i) => (
-                        <motion.button
-                            key={i}
-                            onClick={() => setActiveTheme(i)}
-                            whileHover={{ scale: 1.25 }}
-                            whileTap={{ scale: 0.85 }}
-                            transition={{ duration: 0.075, ease: "easeOut" }}
-                            className="relative w-4 h-4 rounded-full focus:outline-none"
-                            style={{ backgroundColor: t.swatch }}
-                            onFocus={(e) => { e.currentTarget.style.boxShadow = `0 0 0 5px ${t.swatch}28`; }}
-                            onBlur={(e) => { e.currentTarget.style.boxShadow = ""; }}
-                        >
-                            {activeTheme === i && (
-                                <motion.span
-                                    layoutId="satisfying-active-ring"
-                                    className="absolute rounded-full pointer-events-none"
-                                    style={{ inset: -3, boxShadow: `0 0 0 1.5px ${t.swatch}66` }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                                />
-                            )}
-                        </motion.button>
-                    ))}
+                <ColorSwatchPicker
+                    swatches={SWATCHES}
+                    activeIndex={activeTheme}
+                    onChange={setActiveTheme}
+                    layoutId="satisfying-active-ring"
+                />
+                <div className="ml-auto flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground/60">Light</span>
+                    <ThemeToggle value={cardTheme} onChange={handleThemeChange} />
+                    <span className="text-xs text-muted-foreground/60">Dark</span>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

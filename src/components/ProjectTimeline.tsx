@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Link2, Check, ExternalLink } from "lucide-react";
+import { ChevronDown, Link2, Check, ExternalLink, X } from "lucide-react";
 import { SectorIcon } from "./SectorIcon";
 import { TechBadge } from "./TechBadge";
 import { SkipScreenshotSrcContext } from "@/lib/screenshot-context";
@@ -20,14 +20,14 @@ function groupByYear(projects: Project[]): Map<number, Project[]> {
 }
 
 export function ProjectTimeline({ projects }: { projects: Project[] }) {
-    const [openSlug, setOpenSlug] = useState<string | null>(null);
+    const [openSlugs, setOpenSlugs] = useState<Set<string>>(new Set());
     const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
     const itemRefs = useRef<Record<string, HTMLElement | null>>({});
 
     useEffect(() => {
         const hash = window.location.hash.replace("#", "");
         if (hash && projects.some((p) => p.slug === hash)) {
-            setOpenSlug(hash);
+            setOpenSlugs(new Set([hash]));
             setTimeout(() => {
                 itemRefs.current[hash]?.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 150);
@@ -35,21 +35,23 @@ export function ProjectTimeline({ projects }: { projects: Project[] }) {
     }, [projects]);
 
     function toggle(slug: string) {
-        const next = openSlug === slug ? null : slug;
-        setOpenSlug(next);
-        if (next) {
-            window.history.replaceState(null, "", `#${next}`);
-            setTimeout(() => {
-                const el = itemRefs.current[next];
-                if (!el) return;
-                const rect = el.getBoundingClientRect();
-                if (rect.top < 96) {
-                    el.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-            }, 400);
-        } else {
-            window.history.replaceState(null, "", window.location.pathname);
-        }
+        setOpenSlugs((prev) => {
+            const next = new Set(prev);
+            if (next.has(slug)) {
+                next.delete(slug);
+                window.history.replaceState(null, "", window.location.pathname);
+            } else {
+                next.add(slug);
+                window.history.replaceState(null, "", `#${slug}`);
+            }
+            return next;
+        });
+    }
+
+    function closeAll() {
+        setOpenSlugs(new Set());
+        window.history.replaceState(null, "", window.location.pathname);
+        window.scrollTo({ top: 0, behavior: "instant" });
     }
 
     function copyLink(slug: string) {
@@ -61,9 +63,26 @@ export function ProjectTimeline({ projects }: { projects: Project[] }) {
 
     const grouped = groupByYear(projects);
     const years = Array.from(grouped.keys()).sort((a, b) => b - a);
+    const anyOpen = openSlugs.size > 0;
 
     return (
         <div className="space-y-12">
+            {/* Close all button — fixed top-right */}
+            <AnimatePresence>
+                {anyOpen && (
+                    <motion.button
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        onClick={closeAll}
+                        className="fixed top-20 right-6 z-40 flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors bg-background/80 backdrop-blur-sm border border-border rounded-full px-3 py-1.5"
+                    >
+                        <X size={11} />
+                        {openSlugs.size > 1 ? "Close all" : "Close"}
+                    </motion.button>
+                )}
+            </AnimatePresence>
             {years.map((year) => {
                 const yearProjects = grouped.get(year)!;
                 return (
@@ -80,7 +99,7 @@ export function ProjectTimeline({ projects }: { projects: Project[] }) {
                         </motion.div>
 
                         {/* Projects */}
-                        <div className="space-y-3">
+                        <div className="space-y-12">
                             {yearProjects.map((project, i) => (
                                 <motion.div
                                     key={project.slug}
@@ -94,7 +113,7 @@ export function ProjectTimeline({ projects }: { projects: Project[] }) {
                                 >
                                     <ProjectRow
                                         project={project}
-                                        isOpen={openSlug === project.slug}
+                                        isOpen={openSlugs.has(project.slug)}
                                         copied={copiedSlug === project.slug}
                                         onToggle={() => toggle(project.slug)}
                                         onCopyLink={() => copyLink(project.slug)}
@@ -130,9 +149,10 @@ function ProjectRow({
             : null;
 
     return (
+        <>
         <div
             id={project.slug}
-            className="rounded-xl border border-border overflow-hidden scroll-mt-24"
+            className="project-card rounded-xl border border-border overflow-hidden scroll-mt-20"
         >
             {/* Collapsed header */}
             <button
@@ -205,18 +225,20 @@ function ProjectRow({
                 {isOpen && project.firstScreenshot && (
                     <motion.div
                         key="hero"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="border-t border-border bg-muted/40 pt-6 px-[60px] pb-6"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden"
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src={project.firstScreenshot}
-                            alt={project.company}
-                            className="w-full h-auto block shadow-sm rounded-lg"
-                        />
+                        <div className="border-t border-border bg-muted/40 pt-6 px-[60px] pb-6">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={project.firstScreenshot}
+                                alt={project.company}
+                                className="w-full h-auto block shadow-sm rounded-lg"
+                            />
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -276,5 +298,20 @@ function ProjectRow({
                 )}
             </AnimatePresence>
         </div>
+
+        {/* Separator — only shown when open, outside the card */}
+        <AnimatePresence initial={false}>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0, scaleX: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, scaleX: 1, height: 4, marginTop: 48 }}
+                    exit={{ opacity: 0, scaleX: 0, height: 0, marginTop: 0 }}
+                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ originX: 0.5 }}
+                    className="w-[56%] rounded-full bg-primary/30 mx-auto"
+                />
+            )}
+        </AnimatePresence>
+        </>
     );
 }

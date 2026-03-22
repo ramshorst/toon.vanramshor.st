@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { BlogPost } from "@/lib/blog";
-
-// Add your interactive component explorations here as you build them.
-// Each entry should link to a page or demo where the component lives.
-const COMPONENT_ENTRIES: { title: string; date: string; href: string; preview?: string }[] = [
-    { title: "Satisfying Button", date: "2026-03-21", href: "/explorations/satisfying-button" },
-];
+import { COMPONENTS } from "@/lib/components-registry";
 
 type Tab = "writing" | "components";
 
@@ -22,7 +17,7 @@ export function Explorations({ posts }: { posts: BlogPost[] }) {
         type: "writing" as const,
     }));
 
-    const componentEntries = COMPONENT_ENTRIES.map((c) => ({
+    const componentEntries = COMPONENTS.map((c) => ({
         ...c,
         type: "components" as const,
     }));

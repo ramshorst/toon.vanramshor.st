@@ -1,9 +1,19 @@
 "use client";
 
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { COMPONENTS } from "@/lib/components-registry";
 import { SatisfyingButtonShowcase } from "@/components/explorations/SatisfyingButtonShowcase";
+import { BreathingLoaderShowcase } from "@/components/explorations/BreathingLoaderShowcase";
+
+const SHOWCASE_MAP: Record<string, (props: { onThemeChange: (v: "light" | "dark") => void }) => React.ReactNode> = {
+    "/explorations/satisfying-button": (p) => <SatisfyingButtonShowcase {...p} />,
+    "/explorations/breathing-loader":  (p) => <BreathingLoaderShowcase  {...p} />,
+};
+
+const latestComponent = [...COMPONENTS].sort((a, b) => b.date.localeCompare(a.date))[0];
 
 const SPRING = { type: "spring", stiffness: 500, damping: 32 } as const;
 const SLIDE = { duration: 0.07, ease: "easeInOut" } as const;
@@ -15,7 +25,13 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
     const [hovered, setHovered] = useState(false);
     const [aboutHovered, setAboutHovered] = useState(false);
     const [displayYear, setDisplayYear] = useState(START_YEAR);
+    const [cardTheme, setCardTheme] = useState<"light" | "dark">("light");
     const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    useEffect(() => {
+        const t = document.documentElement.getAttribute("data-theme");
+        setCardTheme(t === "dark" ? "dark" : "light");
+    }, []);
 
     useEffect(() => {
         if (!hovered) {
@@ -157,12 +173,17 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="flex-1 max-w-md"
             >
-                <div className="rounded-2xl border border-border bg-card p-6">
-                    <Link href="/explorations/satisfying-button" className="group inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-4">
-                        Latest component
-                        <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[10px]">→</span>
-                    </Link>
-                    <SatisfyingButtonShowcase />
+                <div data-theme={cardTheme} className="rounded-2xl border border-border bg-card p-6">
+                    <div className="flex items-center justify-between mb-4">
+                        <Link href={latestComponent.href} className="group inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">
+                            Latest component
+                            <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[10px]">→</span>
+                        </Link>
+                        <Link href="/components" className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+                            all components
+                        </Link>
+                    </div>
+                    {SHOWCASE_MAP[latestComponent.href]?.({ onThemeChange: setCardTheme })}
                 </div>
             </motion.div>
         </section>
