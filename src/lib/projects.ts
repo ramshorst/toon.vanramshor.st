@@ -16,6 +16,8 @@ export type Project = {
     tags: string[];
     url?: string;
     draft?: boolean;
+    firstScreenshot?: string;
+    hideScreenshotPreview?: boolean;
     content: React.ReactNode;
 };
 
@@ -43,11 +45,15 @@ export async function getProjects(): Promise<Project[]> {
                     tags: string[];
                     url?: string;
                     draft?: boolean;
+                    hideScreenshotPreview?: boolean;
                 }>({
                     source,
                     options: { parseFrontmatter: true },
                     components: useMDXComponents({}),
                 });
+
+                const firstScreenshotMatch = source.match(/<Screenshot[^>]+\bsrc=["']([^"']+)["']/);
+                const firstScreenshot = firstScreenshotMatch?.[1];
 
                 return {
                     slug,
@@ -60,6 +66,8 @@ export async function getProjects(): Promise<Project[]> {
                     tags: frontmatter.tags ?? [],
                     url: frontmatter.url,
                     draft: frontmatter.draft ?? false,
+                    firstScreenshot: frontmatter.hideScreenshotPreview ? undefined : firstScreenshot,
+                    hideScreenshotPreview: frontmatter.hideScreenshotPreview,
                     content,
                 };
             })

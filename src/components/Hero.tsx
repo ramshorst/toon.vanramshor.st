@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { SatisfyingButtonShowcase } from "@/components/explorations/SatisfyingButtonShowcase";
 
 const SPRING = { type: "spring", stiffness: 500, damping: 32 } as const;
 const SLIDE = { duration: 0.07, ease: "easeInOut" } as const;
@@ -49,7 +50,8 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-3xl opacity-20 rounded-full" />
                     <h1 className="relative text-5xl md:text-7xl font-bold tracking-tight mb-4">
-                        Hi, I'm <span className="text-foreground">Toon</span>
+                        <span className="block">Toon</span>
+                        <span className="block">van Ramshorst</span>
                     </h1>
                 </motion.div>
 
@@ -59,7 +61,7 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="text-xl md:text-2xl text-muted-foreground mb-10"
                 >
-                    <Link href="/web-development/design-engineer" className="underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-muted-foreground/60 transition-colors">Design engineer</Link> who loves turning ideas into things people actually use. I write about building, shipping, and the craft in between.
+                    <Link href="/web-development/design-engineer" className="underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-muted-foreground/60 transition-colors">Design engineer</Link>. I ship things and lose sleep wondering what design system Dieter Rams would have built.
                 </motion.p>
 
                 <motion.div
@@ -150,21 +152,18 @@ export function Hero({ projectYears = [] }: { projectYears?: number[] }) {
             </div>
 
             <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex-1 max-w-md relative"
+                className="flex-1 max-w-md"
             >
-                <img
-                    src="/toon_cartoon.png"
-                    alt="Cartoon version of Toon"
-                    className="w-full h-auto drop-shadow-2xl dark:hidden"
-                />
-                <img
-                    src="/toon_dithered_mac.png"
-                    alt="Cartoon version of Toon (Night Mode)"
-                    className="w-full h-auto drop-shadow-2xl hidden dark:block"
-                />
+                <div className="rounded-2xl border border-border bg-card p-6">
+                    <Link href="/explorations/satisfying-button" className="group inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-4">
+                        Latest component
+                        <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[10px]">→</span>
+                    </Link>
+                    <SatisfyingButtonShowcase />
+                </div>
             </motion.div>
         </section>
     );

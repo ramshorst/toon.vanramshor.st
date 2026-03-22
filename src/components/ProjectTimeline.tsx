@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Link2, Check, ExternalLink } from "lucide-react";
 import { SectorIcon } from "./SectorIcon";
 import { TechBadge } from "./TechBadge";
+import { SkipScreenshotSrcContext } from "@/lib/screenshot-context";
 import type { Project } from "@/lib/projects";
 
 const MAX_VISIBLE_TAGS = 4;
@@ -162,7 +163,7 @@ function ProjectRow({
                             </span>
                         )}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1 leading-snug line-clamp-2">
+                    <p className={`text-sm text-muted-foreground mt-1 leading-snug ${project.firstScreenshot && !isOpen ? "line-clamp-1" : "line-clamp-2"}`}>
                         {project.description}
                     </p>
                     <div className="flex flex-wrap gap-1.5 mt-3">
@@ -177,6 +178,18 @@ function ProjectRow({
                     </div>
                 </div>
 
+                {/* Screenshot preview */}
+                {project.firstScreenshot && !isOpen && (
+                    <div className="shrink-0 self-stretch w-48 sm:w-56 md:w-64 rounded-lg overflow-hidden bg-muted/30 flex items-center justify-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={project.firstScreenshot}
+                            alt={`${project.company} screenshot`}
+                            className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                        />
+                    </div>
+                )}
+
                 {/* Chevron */}
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
@@ -187,7 +200,28 @@ function ProjectRow({
                 </motion.div>
             </button>
 
-            {/* Expanded case study */}
+            {/* Hero screenshot */}
+            <AnimatePresence initial={false}>
+                {isOpen && project.firstScreenshot && (
+                    <motion.div
+                        key="hero"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="border-t border-border bg-muted/40 pt-6 px-[60px] pb-6"
+                    >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={project.firstScreenshot}
+                            alt={project.company}
+                            className="w-full h-auto block shadow-sm rounded-lg"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Rest of expanded content with height animation */}
             <AnimatePresence initial={false}>
                 {isOpen && (
                     <motion.div
@@ -195,49 +229,49 @@ function ProjectRow({
                         animate={{ height: "auto" }}
                         exit={{ height: 0 }}
                         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                        className="overflow-hidden"
+                        className={`overflow-hidden${!project.firstScreenshot ? " border-t border-border" : ""}`}
                     >
-                        <div className="border-t border-border">
-                            {/* Copy link bar */}
-                            <div className="flex items-center justify-end gap-4 px-5 pt-3 pb-1">
-                                {project.url && (
-                                    <a
-                                        href={project.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                                    >
-                                        <ExternalLink size={12} />
-                                        {project.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
-                                    </a>
-                                )}
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onCopyLink();
-                                    }}
+                        {/* Copy link bar */}
+                        <div className="flex items-center justify-end gap-4 px-5 pt-3 pb-1">
+                            {project.url && (
+                                <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
                                     className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
                                 >
-                                    {copied ? (
-                                        <>
-                                            <Check size={12} className="text-primary" />
-                                            Copied
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Link2 size={12} />
-                                            Copy link
-                                        </>
-                                    )}
-                                </button>
-                            </div>
+                                    <ExternalLink size={12} />
+                                    {project.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                                </a>
+                            )}
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onCopyLink();
+                                }}
+                                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                {copied ? (
+                                    <>
+                                        <Check size={12} className="text-primary" />
+                                        Copied
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link2 size={12} />
+                                        Copy link
+                                    </>
+                                )}
+                            </button>
+                        </div>
 
-                            {/* MDX case study content */}
+                        {/* MDX case study content — first screenshot suppressed (shown as hero above) */}
+                        <SkipScreenshotSrcContext.Provider value={project.firstScreenshot ?? null}>
                             <div className="px-5 pb-8 prose prose-sm max-w-none [&_h2]:text-base [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-2 [&_h2]:text-foreground [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-1 [&_h3]:text-foreground [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_ul]:text-muted-foreground [&_li]:leading-relaxed">
                                 {project.content}
                             </div>
-                        </div>
+                        </SkipScreenshotSrcContext.Provider>
                     </motion.div>
                 )}
             </AnimatePresence>

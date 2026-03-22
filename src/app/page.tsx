@@ -1,13 +1,12 @@
 import { Hero } from "@/components/Hero";
 import { TechStack } from "@/components/TechStack";
+import { Explorations } from "@/components/Explorations";
+
 import { getBlogPosts } from "@/lib/blog";
 import { getProjects } from "@/lib/projects";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 export default async function Home() {
   const posts = await getBlogPosts();
-  const recentPosts = posts.slice(0, 5);
   const projects = await getProjects();
   const projectYears = [...new Set(projects.map((p) => p.year))].sort((a, b) => a - b);
 
@@ -59,36 +58,11 @@ export default async function Home() {
           </section>
         )}
 
-        {/* Recent writing */}
+        {/* Explorations */}
         <section>
-          <div className="flex items-center justify-between mb-10">
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Recent writing</h2>
-            <Link href="/blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors group">
-              All posts
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </div>
-
-          <div className="divide-y divide-border/60">
-            {recentPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={post.category ? `/${post.category}/${post.slug}` : `/blog/${post.slug}`}
-                className="flex items-baseline justify-between gap-6 py-5 group"
-              >
-                <h3 className="text-base font-medium group-hover:text-primary transition-colors leading-snug">
-                  {post.title}
-                </h3>
-                <time className="shrink-0 text-sm text-muted-foreground tabular-nums">
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </time>
-              </Link>
-            ))}
-          </div>
+          <Explorations posts={posts} />
         </section>
+
 
       </div>
     </div>

@@ -40,7 +40,7 @@ export function AboutContent({ industryLinks = {}, techLinks = {} }: { industryL
                 animate="visible"
                 custom={0}
             >
-                Hi, I'm Toon.
+                Toon van Ramshorst
             </motion.h1>
 
             <div className="prose prose-lg dark:prose-invert max-w-none">

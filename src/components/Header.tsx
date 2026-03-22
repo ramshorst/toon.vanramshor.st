@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
     { href: "/projects", label: "Projects" },
+    { href: "/components", label: "Components" },
     { href: "/about", label: "About" },
     { href: "/blog", label: "Blog" },
 ];
@@ -34,8 +35,8 @@ export function Header() {
         >
             {mounted ? (
                 resolvedTheme === "dark"
-                    ? <Sun className="h-5 w-5 text-yellow-500" />
-                    : <Moon className="h-5 w-5 text-slate-700" />
+                    ? <Sun className="h-5 w-5 text-yellow-500/60 hover:text-primary transition-colors" />
+                    : <Moon className="h-5 w-5 text-slate-400 hover:text-muted-foreground transition-colors" />
             ) : (
                 <div className="h-5 w-5" />
             )}
@@ -54,7 +55,7 @@ export function Header() {
                                         key={i}
                                         variants={{
                                             initial: { color: "var(--foreground)" },
-                                            hover: { color: "var(--primary)" },
+                                            hover: { color: resolvedTheme === "dark" ? "var(--primary)" : "var(--muted-foreground)" },
                                         }}
                                         transition={{ duration: 0.2, ease: "easeInOut", delay: 0.015 * i }}
                                         className="inline-block"
@@ -69,18 +70,18 @@ export function Header() {
                     {/* Desktop nav */}
                     <nav className="hidden md:flex items-center gap-6">
                         {NAV_LINKS.map(({ href, label }) => (
-                            <Link key={href} href={href} className="text-sm font-medium hover:text-primary transition-colors">
+                            <Link key={href} href={href} className="text-sm font-medium hover:text-muted-foreground dark:hover:text-primary transition-colors">
                                 {label}
                             </Link>
                         ))}
-                        <Link href="/photos" className="text-sm font-medium hover:text-primary transition-colors">
+                        <Link href="/photos" className="text-sm font-medium hover:text-muted-foreground dark:hover:text-primary transition-colors">
                             Photos
                         </Link>
                         <Link
                             href="https://calendly.com/ramshorst/30min"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:scale-[1.04] active:scale-[0.96] transition-transform"
+                            className="text-sm font-medium hover:text-muted-foreground dark:hover:text-primary transition-colors"
                         >
                             Let's talk
                         </Link>
@@ -149,7 +150,7 @@ export function Header() {
                                     <Link
                                         href={href}
                                         onClick={() => setMenuOpen(false)}
-                                        className="text-4xl font-bold tracking-tight hover:text-primary transition-colors block py-3 border-b border-border/40 last:border-0"
+                                        className="text-4xl font-bold tracking-tight hover:text-muted-foreground dark:hover:text-primary transition-colors block py-3 border-b border-border/40 last:border-0"
                                     >
                                         {label}
                                     </Link>
