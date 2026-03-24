@@ -1,13 +1,8 @@
 import { ImageResponse } from "next/og";
 
 export const dynamic = "force-static";
-
-export const alt = "Toon van Ramshorst - Technical Designer & AI Coder";
-export const size = {
-    width: 1200,
-    height: 630,
-};
-
+export const alt = "Toon van Ramshorst — Technical Designer & AI Coder";
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
@@ -15,65 +10,128 @@ export default async function Image() {
         (
             <div
                 style={{
-                    background: "linear-gradient(to bottom right, #fcfbf7, #e6f0e6)",
                     width: "100%",
                     height: "100%",
+                    background: "#fcfbf7",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
+                    padding: "72px 80px",
                     fontFamily: "sans-serif",
+                    position: "relative",
                 }}
             >
+                {/* Decorative background ring — top right */}
                 <div
                     style={{
+                        position: "absolute",
+                        top: -160,
+                        right: -160,
+                        width: 520,
+                        height: 520,
+                        borderRadius: "50%",
+                        border: "80px solid #f3d8bf",
+                        opacity: 0.5,
                         display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: 40,
                     }}
-                >
-                    {/* Stylized T Icon (Simulated with text/shape for now as loading local images in edge can be tricky without fetch) */}
+                />
+                {/* Decorative background ring — bottom left */}
+                <div
+                    style={{
+                        position: "absolute",
+                        bottom: -80,
+                        left: -80,
+                        width: 280,
+                        height: 280,
+                        borderRadius: "50%",
+                        border: "40px solid #ead8c8",
+                        opacity: 0.4,
+                        display: "flex",
+                    }}
+                />
+
+                {/* Monogram — top right */}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <div
                         style={{
-                            width: 80,
-                            height: 80,
-                            borderRadius: "50%",
-                            background: "#4ade80",
+                            width: 64,
+                            height: 64,
+                            borderRadius: 14,
+                            background: "#d99a63",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            color: "white",
-                            fontSize: 48,
-                            fontWeight: "bold",
-                            marginRight: 20,
+                            color: "#ffffff",
+                            fontSize: 38,
+                            fontWeight: 700,
                         }}
                     >
                         T
                     </div>
-                    <div style={{ fontSize: 64, fontWeight: "bold", color: "#1a2e1a" }}>
+                </div>
+
+                {/* Main content */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        style={{
+                            fontSize: 72,
+                            fontWeight: 800,
+                            color: "#2a1508",
+                            lineHeight: 1.05,
+                            letterSpacing: "-2px",
+                            marginBottom: 24,
+                            display: "flex",
+                        }}
+                    >
                         Toon van Ramshorst
                     </div>
+                    <div
+                        style={{
+                            fontSize: 30,
+                            color: "#6c4b37",
+                            fontWeight: 400,
+                            display: "flex",
+                        }}
+                    >
+                        Technical Designer & AI Coder
+                    </div>
                 </div>
+
+                {/* Footer */}
                 <div
                     style={{
-                        fontSize: 32,
-                        color: "#4b5563",
-                        maxWidth: 800,
-                        textAlign: "center",
-                        lineHeight: 1.4,
                         display: "flex",
-                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "space-between",
                     }}
                 >
-                    Technical Designer & AI Coder
-                    <br />
-                    Crafting digital experiences with code, design, and AI.
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0,
+                        }}
+                    >
+                        <div
+                            style={{
+                                width: 40,
+                                height: 3,
+                                background: "#d99a63",
+                                marginRight: 16,
+                                display: "flex",
+                                borderRadius: 2,
+                            }}
+                        />
+                        <span style={{ fontSize: 22, color: "#6c4b37", display: "flex" }}>
+                            Writing on design, code, and the web
+                        </span>
+                    </div>
+                    <span style={{ fontSize: 20, color: "#ead8c8", display: "flex" }}>
+                        toon.vanramshor.st
+                    </span>
                 </div>
             </div>
         ),
-        {
-            ...size,
-        }
+        { ...size }
     );
 }

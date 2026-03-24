@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
+
 import type { BlogPost } from "@/lib/blog";
 import { COMPONENTS } from "@/lib/components-registry";
 
@@ -28,18 +30,22 @@ export function Explorations({ posts }: { posts: BlogPost[] }) {
         <section>
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Explorations</h2>
-                <div className="flex items-center gap-1 text-sm">
+                <div className="flex items-center gap-0.5 bg-foreground/10 rounded-full p-1 text-sm">
                     {(["writing", "components"] as Tab[]).map((t) => (
                         <button
                             key={t}
                             onClick={() => setTab(t)}
-                            className={`px-3 py-1 rounded-full transition-colors capitalize ${
-                                tab === t
-                                    ? "bg-foreground text-background"
-                                    : "text-muted-foreground hover:text-foreground"
-                            }`}
+                            className="relative px-3.5 py-1 rounded-full capitalize font-medium transition-colors duration-200"
+                            style={{ color: tab === t ? "var(--foreground)" : "var(--muted-foreground)" }}
                         >
-                            {t}
+                            {tab === t && (
+                                <motion.span
+                                    layoutId="tab-pill"
+                                    className="absolute inset-0 rounded-full bg-background shadow-sm"
+                                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                />
+                            )}
+                            <span className="relative z-10">{t}</span>
                         </button>
                     ))}
                 </div>
@@ -53,22 +59,14 @@ export function Explorations({ posts }: { posts: BlogPost[] }) {
                         <Link
                             key={entry.href}
                             href={entry.href}
-                            className="flex items-baseline justify-between gap-6 py-4 group"
+                            className="flex items-baseline gap-3 py-4 group"
                         >
-                            <div className="flex items-baseline gap-3 min-w-0">
-                                <span className="shrink-0 text-xs text-muted-foreground/50 uppercase tracking-wider hidden sm:inline">
-                                    {entry.type === "writing" ? "essay" : "component"}
-                                </span>
-                                <span className="text-base font-medium group-hover:text-primary transition-colors leading-snug truncate">
-                                    {entry.title}
-                                </span>
-                            </div>
-                            <time className="shrink-0 text-sm text-muted-foreground tabular-nums">
-                                {new Date(entry.date).toLocaleDateString("en-US", {
-                                    month: "short",
-                                    year: "numeric",
-                                })}
-                            </time>
+                            <span className="shrink-0 text-xs text-muted-foreground/50 uppercase tracking-wider hidden sm:inline">
+                                {entry.type === "writing" ? "essay" : "component"}
+                            </span>
+                            <span className="text-base font-medium group-hover:text-primary transition-colors leading-snug truncate">
+                                {entry.title}
+                            </span>
                         </Link>
                     ))}
                 </div>
